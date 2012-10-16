@@ -100,3 +100,4 @@ fr:
   searchbykeywords: "Rechercher par mots-clés"
   keywords: "Mots-clés"
   comaseparated: "séparés par une virgule"
+  no_item_found: "Aucun article correspondant à la recherche n'a été trouvé..."

@@ -1,7 +1,7 @@
 class SellingsController < ApplicationController
-    before_filter :check_is_admin, :only => [:index, :create, :show, :showcurrent, :addItemToCurrentSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
+    before_filter :check_is_admin, :only => [:index, :create, :show, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
     before_filter :getAdministratorFromCurrentUser, :only => [:create, :show, :showcurrent]
-    before_filter :getCurrentSell, :only => [:index, :create, :showcurrent, :addItemToCurrentSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
+    before_filter :getCurrentSell, :only => [:index, :create, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
     
     def check_is_admin
         if current_user.type != "Administrator"
@@ -69,6 +69,24 @@ class SellingsController < ApplicationController
                 redirect_to :controller => "sellings", :action => "showcurrent"
             end
        end
+    end
+    
+    def searchItemToSell
+        keywords = params[:keywords].strip.squeeze(",").split(',')
+        keywords.map! {|kw| "'%" + kw + "%'" }
+        
+        conditions = keywords.map {|kw| "name LIKE " + kw + " OR type LIKE " + kw + " OR brand LIKE " + kw + " OR color LIKE " + kw + " OR other LIKE " + kw }
+        
+        search_condition = conditions.join(' OR ')
+        
+        @results = Item.find(:all, :conditions => search_condition)
+        
+        if @results.empty?
+            flash[:error] = t('item_not_foud')
+            redirect_to :controller => "items", :action => "show_only", :itemid => @results.first.id
+        else
+            render :template => "sellings/searchItemToSell"
+        end
     end
     
     def removeFromCurrentSell

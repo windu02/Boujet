@@ -60,6 +60,7 @@ Boujet02::Application.routes.draw do
       post '/sellings/closecurrentsell' => 'sellings#closecurrentsell'
       
       post '/sellings/addItemToCurrentSell' => 'sellings#addItemToCurrentSell'
+      post '/sellings/searchItemToSell' => 'sellings#searchItemToSell'
       
       delete '/sellings/:itemid/removeFromCurrentSell' => 'sellings#removeFromCurrentSell'
       
