@@ -1,0 +1,44 @@
+<div class="well">
+    <h2><%= t('searchbyitemid') %></h2>
+    <div class="row-fluid">
+          <div class="span12">
+               <%= form_tag(url_for(:controller => "items", :action => "searchbyitemid"), :method => :post, :class => "form-horizontal") do %>
+                      
+                       <div class="control-group">
+							<%= label_tag :itemid, t('itemid'), :class => "control-label" %>
+							<div class="controls">
+								<%= text_field_tag :itemid, params[:itemid], :id => 'searchbyitemid_field', :class => "input-large" %>
+							</div>
+						</div>
+                      
+                       <div class="control-group">
+                            <div class="controls">
+                                 <%= submit_tag t('search'), :name => nil, :class => "btn btn-primary btn-large" %>
+                            </div>
+                       </div>
+             <% end %>
+          </div>
+     </div>
+ </div>
+ 
+ <div class="well">
+    <h2><%= t('searchbykeywords') %></h2>
+    <div class="row-fluid">
+          <div class="span12">
+               <%= form_tag(url_for(:controller => "items", :action => "searchbykeywords"), :method => :post, :class => "form-horizontal") do %>
+                       <div class="control-group">
+							<%= label_tag :keywords, t('keywords') + ' (' + t('comaseparated') + ')', :class => "control-label" %>
+							<div class="controls">
+								<%= text_field_tag :keywords, params[:keywords], :id => 'keywords_field', :class => "input-large" %>
+							</div>
+						</div>
+                      
+                       <div class="control-group">
+                            <div class="controls">
+                                 <%= submit_tag t('search'), :name => nil, :class => "btn btn-primary btn-large" %>
+                            </div>
+                       </div>
+             <% end %>
+          </div>
+     </div>
+ </div>

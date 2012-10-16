@@ -1,0 +1,27 @@
+<div class="row-fluid"> 
+    <div class="page-header">
+        <h1><%= t('searchresults') %></h1>
+    </div>
+</div>
+
+<% if @results.empty? %>
+    <div class="alert alert-info">
+        <%= t('noresult') %>
+    </div>
+    
+    <%= render "depositorsearchform" %>
+<% else %>
+
+    <div class="row-fluid">
+            <table class="table table-striped">
+                    <tbody>
+                        <% @results.each do |depositor| %>
+                            <tr>
+                                <td><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => depositor.id) %>"><%= depositor.firstname %> <%= depositor.lastname %></a></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+            </table>
+    </div>
+
+<% end %>

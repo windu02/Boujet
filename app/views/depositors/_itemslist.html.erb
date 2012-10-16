@@ -1,0 +1,79 @@
+<% if current_user.id != @depositor.id %>
+<script language="javascript">
+        function displayItemDeleteConfirmation(itemid)
+        {
+                var deleteUrl = '<%= url_for(:controller => "items", :action => "destroy", :depositorid => @depositor.id, :itemid => "%id%") %>';
+                $('#deleteItemForm').attr("action", deleteUrl.replace('%id%', itemid));
+                $('#deleteItemModal').modal('show');
+        }
+</script>
+
+<div id="deleteItemModal" class="modal hide fade">
+        <div class="modal-header">
+                <a class="close" data-dismiss="modal" >&times;</a>
+                <h3><%= t('warning') %></h3>
+        </div>
+        <div class="modal-body">
+                <p><%= t('itemdeletequestion') %></p>
+        </div>
+        <div class="modal-footer">
+                <% item = Item.new; %>
+                <%= form_for(item, :method => :delete, :url => '', :html => {:class => "form-horizontal", :id => "deleteItemForm"}) do |f| %>
+                        <div class="control-group">
+                                <div class="controls">
+                                        <%= f.submit t('delete'), :class => "btn btn-danger btn-large" %>
+                                        <a href="#" class="btn" data-dismiss="modal" ><%= t('cancel') %></a>
+                                </div>
+                        </div>
+                <% end %>
+        </div>
+</div>
+
+<p class="navbar-text pull-right"><a class="btn btn-success" href="<%= url_for(:controller => "recordings", :action => "item", :depositorid => @depositor.id) %>" ><%= t('savenewitem') %></a></p>
+
+<% end %>
+
+<div class="row-fluid">
+        <table class="table table-striped">
+                <thead>
+                <tr>
+                        <th><%= t('itemid') %></th>
+                        <th><%= t('name') %></th>
+                        <th><%= t('brand') %></th>
+                        <th><%= t('type') %></th>
+                        <th><%= t('color') %></th>
+                        <th><%= t('price') %></th>
+                        <th><%= t('other') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if ! @depositor.items.empty? %>
+                        <% @depositor.items.each do |item| %>
+                                <tr>
+                                <td><%= item.id %></td>
+                                <td><a href="<%= url_for(:controller => "items", :action => "show", :depositorid => @depositor.id, :itemid => item.id) %>"><%= item.name %></a></td>
+                                <td><%= item.brand %></td>
+                                <td><%= item.type %></td>
+                                <td><%= item.color %></td>
+                                <td><%= item.price %></td>
+                                <td><%= item.other %></td>
+                                <% if item.is_sold? %>
+                                <td><span class="label label-success"><%= t('sold') %></span></td>
+                                <% else %>
+                                    <% if current_user.id != @depositor.id %>
+                                    <td><a href="<%= url_for(:controller => "items", :action => "edit", :depositorid => @depositor.id, :itemid => item.id) %>" class="btn btn-info btn-mini"><i class="icon-pencil icon-white"></i></a>&nbsp;&nbsp;<a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= item.id %>');"><i class="icon-remove icon-white"></i></a></td>
+                                    <% else %>
+                                    <td><span class="label label-warning"><%= t('tosell') %></span></td>
+                                    <% end %>
+                                <% end %>
+                            </tr>
+                        <% end %>
+                <% end %>
+                </tbody>
+        </table>
+        <% if @depositor.items.empty? %>
+        <div class="alert alert-info">
+                <%= t('noitemforsellto') %> <% if @depositor.id == current_user.id -%><%= t('you') %><% else -%><%= @depositor.firstname.capitalize %> <%= @depositor.lastname.capitalize %><% end %>.
+        </div>
+        <% end %>
+</div>

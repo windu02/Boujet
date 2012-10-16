@@ -1,0 +1,11 @@
+<div class="row-fluid"> 
+    <div class="page-header">
+        <h1><%= t('infoson') %> <%= current_user.firstname %> <%= current_user.lastname %></h1>
+    </div>
+</div>
+
+<div class="row-fluid">
+        <div class="span10 offset2">
+                        <p><span class="label label-info"><i class="icon-envelope icon-white"></i> <%= t('mail') %></span> : <%= current_user.email %></p>
+        </div>                     
+ </div>

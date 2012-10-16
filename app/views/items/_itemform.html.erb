@@ -1,0 +1,59 @@
+							<div class="control-group<% if @item.errors[:name] and ! @item.errors[:name].empty? %> error<% end %>">
+								<%= f.label :name, t('name') + " *", :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :name, :class => "input-large" %>
+									<% if @item.errors[:name] and ! @item.errors[:name].empty? %>
+                                            <span class="help-inline"><%= @item.errors[:name].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @item.errors[:type] and ! @item.errors[:type].empty? %> error<% end %>">
+								<%= f.label :type, t('type'), :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :type, :class => "input-large" %>
+									<% if @item.errors[:type] and ! @item.errors[:type].empty? %>
+                                            <span class="help-inline"><%= @item.errors[:type].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @item.errors[:brand] and ! @item.errors[:brand].empty? %> error<% end %>">
+								<%= f.label :brand, t('brand'), :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :brand, :class => "input-large" %>
+									<% if @item.errors[:brand] and ! @item.errors[:brand].empty? %>
+                                            <span class="help-inline"><%= @item.errors[:brand].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @item.errors[:color] and ! @item.errors[:color].empty? %> error<% end %>">
+								<%= f.label :color, t('color'), :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :color, :class => "input-large" %>
+									<% if @item.errors[:color] and ! @item.errors[:color].empty? %>
+                                            <span class="help-inline"><%= @item.errors[:color].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @item.errors[:price] and ! @item.errors[:price].empty? %> error<% end %>">
+								<%= f.label :price, t('price') + " *", :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :price, :class => "input-large" %>
+									<% if @item.errors[:price] and ! @item.errors[:price].empty? %>
+                                            <span class="help-inline"><%= @item.errors[:price].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @item.errors[:other] and ! @item.errors[:other].empty? %> error<% end %>">
+								<%= f.label :other, t('other'), :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_area :other, :rows=>5, :class => "input-large" %>
+									<% if @item.errors[:other] and ! @item.errors[:other].empty? %>
+                                            <span class="help-inline"><%= @item.errors[:other].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>

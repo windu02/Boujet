@@ -1,0 +1,101 @@
+<script language="javascript">
+        function displayItemDeleteConfirmation(itemid)
+        {
+                var deleteUrl = '<%= url_for(:controller => "sellings", :action => "removeFromCurrentSell", :itemid => "%id%") %>';
+                $('#deleteItemForm').attr("action", deleteUrl.replace('%id%', itemid));
+                $('#deleteItemModal').modal('show');
+        }
+        
+        function displayItemEditPriceForm(itemid)
+        {
+                var editItemPriceUrl = '<%= url_for(:controller => "sellings", :action => "editItemPrice", :itemid => "%id%") %>';
+                $('#editItemPriceForm').attr("action", editItemPriceUrl.replace('%id%', itemid));
+                $('#editItemPriceModal').modal('show');
+        }
+</script>
+
+<div id="deleteItemModal" class="modal hide fade">
+        <div class="modal-header">
+                <a class="close" data-dismiss="modal" >&times;</a>
+                <h3><%= t('warning') %></h3>
+        </div>
+        <div class="modal-body">
+                <p><%= t('itemsellremovequestion') %></p>
+        </div>
+        <div class="modal-footer">
+                <% item = Item.new; %>
+                <%= form_for(item, :method => :delete, :url => '', :html => {:class => "form-horizontal", :id => "deleteItemForm"}) do |f| %>
+                        <div class="control-group">
+                                <div class="controls">
+                                        <%= f.submit t('remove'), :class => "btn btn-danger btn-large" %>
+                                        <a href="#" class="btn" data-dismiss="modal" ><%= t('cancel') %></a>
+                                </div>
+                        </div>
+                <% end %>
+        </div>
+</div>
+
+<div id="editItemPriceModal" class="modal hide fade">
+        <div class="modal-header">
+                <a class="close" data-dismiss="modal" >&times;</a>
+                <h3><%= t('edititemprice') %></h3>
+        </div>
+        <div class="modal-body">
+                <p><%= t('howmuchfornewitempricequestion') %></p>
+        </div>
+        <div class="modal-footer">
+                <% item = Item.new; %>
+                <%= form_for(item, :method => :post, :url => '', :html => {:class => "form-horizontal", :id => "editItemPriceForm"}) do |f| %>
+                        <%= render :partial => "sellings/edititempriceform", :locals => { :f => f, :@item => item } %>
+                <% end %>
+        </div>
+</div>
+
+<h2><%= t('itemslistfromsell') %></h2>
+<div class="row-fluid">
+        <table class="table table-striped">
+                <thead>
+                <tr>
+                        <th><%= t('itemid') %></th>
+                        <th><%= t('name') %></th>
+                        <th><%= t('price') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if ! @sell.items.empty? %>
+                        <% totalSell = 0 %>
+                        <% @sell.items.each do |it| %>
+                            <% totalSell += it.price %>
+                            <tr>
+                                <td><%= it.id %></td>
+                                <td><%= it.name %></td>
+                                <td><%= it.price %> €&nbsp;&nbsp;<a class="btn btn-info btn-mini" onclick="javascript:displayItemEditPriceForm('<%= it.id %>');"><i class="icon-pencil icon-white"></i></a> (<%= t('negotiation') %> : +/- <%= it.user.negotiation %> €)</td>
+                                <td><a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= it.id %>');"><i class="icon-remove icon-white"></i></a></td>
+                            </tr>
+                        <% end %>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total</u>: </strong></td>
+                            <td><%= totalSell %> €</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                <% end %>
+                </tbody>
+        </table>
+        <% if @sell.items.empty? %>
+        <div class="alert alert-info">
+                <%= t('noiteminsell') %>
+        </div>
+        <% end %>
+</div>
+
+<%= render "sellings/additemform" %>
+
+<div class="row-fluid">
+    <div class="span12">
+        <center>
+            <a class="btn btn-success btn-large" href="<%= url_for(:controller => "sellings", :action => "currentsellpayment") %>"><%= t('sellpayment') %></a>
+            <a class="btn btn-danger" href="<%= url_for(:controller => "sellings", :action => "cancelcurrentsell") %>"><%= t('cancelsell') %></a>
+        </center>
+    </div>
+</div>

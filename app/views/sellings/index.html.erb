@@ -1,0 +1,12 @@
+<div class="row-fluid"> 
+    <div class="page-header">
+        <h1><%= t('sellings') %></h1>
+    </div>
+</div>
+
+<% if @currentSell.nil? %>
+    <p><a class="btn btn-large btn-info" href="<%= url_for(:controller => "sellings", :action => "create") %>"><%= t('donewsell') %></a></p>
+<% else %>
+    <h2><%= t('sellalreadyexist') %></h2>
+    <%= render :partial => "sellings/sell", :locals => { :@sell => @currentSell} %>
+<% end %>

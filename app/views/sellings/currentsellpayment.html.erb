@@ -1,0 +1,99 @@
+<div class="row-fluid"> 
+    <div class="page-header">
+        <h1><%= t('sellnumber') %> <%= @currentSell.id %> <small><%= t('sellpayment') %></small></h1>
+    </div>
+</div>
+
+<h2><%= t('itemslistfromsell') %></h2>
+<div class="row-fluid">
+        <table class="table table-striped">
+                <thead>
+                <tr>
+                        <th><%= t('itemid') %></th>
+                        <th><%= t('name') %></th>
+                        <th><%= t('price') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if ! @currentSell.items.empty? %>
+                        <% totalSell = 0 %>
+                        <% @currentSell.items.each do |it| %>
+                            <% totalSell += it.price %>
+                            <tr>
+                                <td><%= it.id %></td>
+                                <td><%= it.name %></td>
+                                <td><%= it.price %> €</td>
+                            </tr>
+                        <% end %>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total</u>: </strong></td>
+                            <td><%= totalSell %> €</td>
+                        </tr>
+                <% end %>
+                </tbody>
+        </table>
+        <% if @currentSell.items.empty? %>
+        <div class="alert alert-info">
+                <%= t('noiteminsell') %>
+        </div>
+        <% end %>
+</div>
+
+<script>
+    var total = <%= totalSell %>
+    function calculateReturnedMonney()
+    {
+        $('#returnedmonney').html(($('#cashdoneinput').val() - total).toFixed(2))
+    }
+    
+    function chequeChoice()
+    {
+        $('#cashManagement').hide()
+        $('#cashdoneinput').val("0")
+    }
+    
+    function cashChoice()
+    {
+        $('#cashManagement').show()
+    }
+</script>
+
+<div class="row-fluid">
+      <div class="span12">
+           <%= form_for(@currentSell, :url => url_for(:controller => "sellings", :action => "closecurrentsell"), :method => :post, :html => {:class => "form-horizontal"}) do |f| %>
+                  
+                    <div class="control-group">
+						<div class="controls">
+    						<label class="radio">
+                              <%= f.radio_button :payment, 'cheque', :checked => "checked", :onClick => "javascript:chequeChoice()" %>
+                              <%= t('bycheque') %>
+                            </label>
+                            <label class="radio">
+                              <%= f.radio_button :payment, 'cash', :onClick => "javascript:cashChoice()" %>
+                              <%= t('bycash') %>
+                            </label>
+                        </div>
+					</div>
+					
+					<div class="control-group hide<% if @currentSell.errors[:cashdone] and ! @currentSell.errors[:cashdone].empty? %> error<% end %>" id="cashManagement">
+                    	<%= f.label :cashdone, t('cashdone') + " *", :class => "control-label" %>
+                    	<div class="controls">
+                    		<%= f.text_field :cashdone, :value => "0", :class => "input-large", :id => "cashdoneinput" %>
+                    		<div>
+                    		  <span class="btn btn-mini btn-warning" onClick="javascript:calculateReturnedMonney()"><%= t('calculatereturnedmoney') %></span> <strong><u><%= t('returnedmonney') %></u>:</strong> <span id="returnedmonney">0</span> €
+                    		  </div>
+                    		<% if @currentSell.errors[:cashdone] and ! @currentSell.errors[:cashdone].empty? %>
+                                    <span class="help-inline"><%= @currentSell.errors[:cashdone].join(', ') %></span>
+                            <% end %>
+                    	</div>
+                    </div>
+                  
+                   <div class="control-group">
+                        <div class="controls">
+                             <%= f.submit t('save'), :class => "btn btn-primary btn-large" %>
+                        </div>
+                   </div>
+         <% end %>
+      </div>
+ </div>

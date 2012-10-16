@@ -1,0 +1,111 @@
+							<div class="control-group<% if @depositor.errors[:firstname] and ! @depositor.errors[:firstname].empty? %> error<% end %>">
+								<%= f.label :firstname, t('firstname') + " *", :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :firstname, :class => "input-large" %>
+									<% if @depositor.errors[:firstname] and ! @depositor.errors[:firstname].empty? %>
+                                            <span class="help-inline"><%= @depositor.errors[:firstname].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @depositor.errors[:lastname] and ! @depositor.errors[:lastname].empty? %> error<% end %>">
+								<%= f.label :lastname, t('lastname') + " *", :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :lastname, :class => "input-large" %>
+									<% if @depositor.errors[:lastname] and ! @depositor.errors[:lastname].empty? %>
+                                            <span class="help-inline"><%= @depositor.errors[:lastname].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @depositor.errors[:email] and ! @depositor.errors[:email].empty? %> error<% end %>">
+								<%= f.label :email, t('email') + " *", :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :email, :class => "input-large" %>
+									<% if @depositor.errors[:email] and ! @depositor.errors[:email].empty? %>
+                                            <span class="help-inline"><%= @depositor.errors[:email].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @depositor.errors[:email_confirmation] and ! @depositor.errors[:email_confirmation].empty? %> error<% end %>">
+								<%= f.label :email_confirmation, t('emailconfirmation') + " *", :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :email_confirmation, :class => "input-large" %>
+									<% if @depositor.errors[:email_confirmation] and ! @depositor.errors[:email_confirmation].empty? %>
+                                            <span class="help-inline"><%= @depositor.errors[:email_confirmation].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @depositor.errors[:phone] and ! @depositor.errors[:phone].empty? %> error<% end %>">
+								<%= f.label :phone, t('phone'), :class => "control-label" %>
+								<div class="controls">
+									<%= f.text_field :phone, :class => "input-large" %>
+									<% if @depositor.errors[:phone] and ! @depositor.errors[:phone].empty? %>
+                                            <span class="help-inline"><%= @depositor.errors[:phone].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<div class="control-group<% if @depositor.errors[:negotiation] and ! @depositor.errors[:negotiation].empty? %> error<% end %>">
+								<%= f.label :negotiation, t('negotiation'), :class => "control-label" %>
+								<div class="controls">
+									<%= f.select :negotiation, options_for_select([0, 1, 2]), :class => 'span1' %>
+									<% if @depositor.errors[:negotiation] and ! @depositor.errors[:negotiation].empty? %>
+                                            <span class="help-inline"><%= @depositor.errors[:negotiation].join(', ') %></span>
+                                    <% end %>
+								</div>
+							</div>
+							
+							<%= fields_for @depositor.address do |addr| %>
+                                    <div class="control-group<% if @depositor.address.errors[:street1] and ! @depositor.address.errors[:street1].empty? %> error<% end %>">
+                                            <%= addr.label :street1, t('street1'), :class => "control-label" %>
+                                            <div class="controls">
+                                                    <%= addr.text_field :street1, :class => "input-large" %>
+                                                    <% if @depositor.address.errors[:street1] and ! @depositor.address.errors[:street1].empty? %>
+                                                            <span class="help-inline"><%= @depositor.address.errors[:street1].join(', ') %></span>
+                                                    <% end %>
+                                            </div>
+                                    </div>
+                                    
+                                    <div class="control-group<% if @depositor.address.errors[:street2] and ! @depositor.address.errors[:street2].empty? %> error<% end %>">
+                                            <%= addr.label :street2, t('street2'), :class => "control-label" %>
+                                            <div class="controls">
+                                                    <%= addr.text_field :street2, :class => "input-large" %>
+                                                    <% if @depositor.address.errors[:street2] and ! @depositor.address.errors[:street2].empty? %>
+                                                            <span class="help-inline"><%= @depositor.address.errors[:street2].join(', ') %></span>
+                                                    <% end %>
+                                            </div>
+                                    </div>
+                                    
+                                    <div class="control-group<% if @depositor.address.errors[:street3] and ! @depositor.address.errors[:street3].empty? %> error<% end %>">
+                                            <%= addr.label :street3, t('street3'), :class => "control-label" %>
+                                            <div class="controls">
+                                                    <%= addr.text_field :street3, :class => "input-large" %>
+                                                    <% if @depositor.address.errors[:street3] and ! @depositor.address.errors[:street3].empty? %>
+                                                            <span class="help-inline"><%= @depositor.address.errors[:street3].join(', ') %></span>
+                                                    <% end %>
+                                            </div>
+                                    </div>
+                                    
+                                    <div class="control-group<% if @depositor.address.errors[:zipcode] and ! @depositor.address.errors[:zipcode].empty? %> error<% end %>">
+                                            <%= addr.label :zipcode, t('zipcode'), :class => "control-label" %>
+                                            <div class="controls">
+                                                    <%= addr.text_field :zipcode, :class => "input-large" %>
+                                                    <% if @depositor.address.errors[:zipcode] and ! @depositor.address.errors[:zipcode].empty? %>
+                                                            <span class="help-inline"><%= @depositor.address.errors[:zipcode].join(', ') %></span>
+                                                    <% end %>
+                                            </div>
+                                    </div>
+                                    
+                                    <div class="control-group<% if @depositor.address.errors[:city] and ! @depositor.address.errors[:city].empty? %> error<% end %>">
+                                            <%= addr.label :city, t('city'), :class => "control-label" %>
+                                            <div class="controls">
+                                                    <%= addr.text_field :city, :class => "input-large" %>
+                                                    <% if @depositor.address.errors[:city] and ! @depositor.address.errors[:city].empty? %>
+                                                            <span class="help-inline"><%= @depositor.address.errors[:city].join(', ') %></span>
+                                                    <% end %>
+                                            </div>
+                                    </div>
+                            <% end %>

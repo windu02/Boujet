@@ -1,0 +1,51 @@
+<div class="well">
+    <h2><%= t('searchbydepid') %></h2>
+    <div class="row-fluid">
+          <div class="span12">
+               <%= form_tag(url_for(:controller => "depositors", :action => "searchbydepid"), :method => :post, :class => "form-horizontal") do %>
+                      
+                       <div class="control-group">
+							<%= label_tag :depid, t('depid'), :class => "control-label" %>
+							<div class="controls">
+								<%= text_field_tag :depid, params[:depid], :id => 'searchbydepid_field', :class => "input-large" %>
+							</div>
+						</div>
+                      
+                       <div class="control-group">
+                            <div class="controls">
+                                 <%= submit_tag t('search'), :name => nil, :class => "btn btn-primary btn-large" %>
+                            </div>
+                       </div>
+             <% end %>
+          </div>
+     </div>
+ </div>
+ 
+ <div class="well">
+    <h2><%= t('searchbyfirstlastname') %></h2>
+    <div class="row-fluid">
+          <div class="span12">
+               <%= form_tag(url_for(:controller => "depositors", :action => "searchbyfirstlastname"), :method => :post, :class => "form-horizontal") do %>
+                       <div class="control-group">
+							<%= label_tag :firstname, t('firstname'), :class => "control-label" %>
+							<div class="controls">
+								<%= text_field_tag :firstname, params[:firstname], :id => 'firstname_field', :class => "input-large" %>
+							</div>
+						</div>
+						
+						<div class="control-group">
+							<%= label_tag :lastname, t('lastname'), :class => "control-label" %>
+							<div class="controls">
+								<%= text_field_tag :lastname, params[:lastname], :id => 'lastname_field', :class => "input-large" %>
+							</div>
+						</div>
+                      
+                       <div class="control-group">
+                            <div class="controls">
+                                 <%= submit_tag t('search'), :name => nil, :class => "btn btn-primary btn-large" %>
+                            </div>
+                       </div>
+             <% end %>
+          </div>
+     </div>
+ </div>
