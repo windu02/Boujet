@@ -82,7 +82,7 @@ class SellingsController < ApplicationController
         @results = Item.find(:all, :conditions => search_condition)
         
         if @results.empty?
-            flash[:error] = t('item_not_foud')
+            flash[:error] = t('no_item_found')
             redirect_to :controller => "items", :action => "show_only", :itemid => @results.first.id
         else
             render :template => "sellings/searchItemToSell"
