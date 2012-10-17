@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :remember_me, :firstname, :lastname
+  attr_accessible :email, :email_confirmation, :password, :password_confirmation, :remember_me, :firstname, :lastname, :phone, :type
   
   validates :firstname, :presence => true
   validates :lastname, :presence => true

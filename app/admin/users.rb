@@ -5,8 +5,7 @@ ActiveAdmin.register User do
       f.input :firstname
       f.input :lastname
       f.input :phone
-      f.input :negotiation
-      f.input :type
+      f.input :type,  :as => :radio,       :collection => ["Depositor", "Administrator"]
     end
     f.buttons
   end
