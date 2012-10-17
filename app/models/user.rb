@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   validates :lastname, :presence => true
   validates :negotiation, :numericality => { :only_integer => true }
   
-#  after_create { |user| user.send_reset_password_instructions }
+  after_create { |user| user.send_reset_password_instructions }
  
   def password_required?
 	new_record? ? false : super
