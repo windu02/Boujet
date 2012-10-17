@@ -33,8 +33,6 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :email_confirmation, :password, :password_confirmation, :remember_me, :firstname, :lastname
   
-  validates :email, :confirmation => true
-  validates :email_confirmation, :presence => true
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   validates :negotiation, :numericality => { :only_integer => true }
