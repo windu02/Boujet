@@ -68,6 +68,10 @@ Boujet02::Application.routes.draw do
       
       get '/sellings' => 'sellings#index'
       
+      post '/settings/updateSettings' => 'settings#updateSettings'
+      
+      get '/settings' => 'settings#index'
+      
       get '/users/index' => 'users#index'
     
       get '/home' => 'home#index'

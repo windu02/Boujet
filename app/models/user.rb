@@ -13,7 +13,7 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string(255)
 #  lastname               :string(255)
-#  negotiation            :integer
+#  negotiation            :integer          default(0)
 #  phone                  :string(255)
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime

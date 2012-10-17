@@ -54,3 +54,5 @@ group :development do
 end
 
 gem 'http_accept_language'
+
+gem 'ledermann-rails-settings', :require => 'rails-settings'

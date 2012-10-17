@@ -40,7 +40,7 @@ class SellingsController < ApplicationController
            redirect_to :controller => "sellings", :action => "showcurrent"
        
        else
-           redirect_to(url_for(:controller => "sellings", :action => "index"), :flash => { :error => t('actionnotauthorize') + "youpi" })
+           redirect_to(url_for(:controller => "sellings", :action => "index"), :flash => { :error => t('actionnotauthorize') })
        end
     end
     

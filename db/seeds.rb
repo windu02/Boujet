@@ -7,3 +7,5 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 admin_user = AdminUser.create([{ :email => "toremove@admin.com", :password => "toremove", :password_confirmation => "toremove" }])
+
+configs = Config.create([{ :key => "pettycash", :value => "0" }])
