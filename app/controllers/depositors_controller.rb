@@ -114,10 +114,14 @@ class DepositorsController < ApplicationController
   
   def searchbyfirstlastname
     @searchMenu = true
-    @results = Depositor.find(:all, :conditions => ['firstname LIKE ? AND lastname LIKE ?', params[:firstname], params[:lastname]])
+    
+    #search_condition = "%" + search + "%"
+    #@results = Depositor.find(:all, :conditions => ['title LIKE ? OR description LIKE ?', search_condition, search_condition])
+    
+    @results = Depositor.find(:all, :conditions => ['firstname LIKE ? AND lastname LIKE ?', "%" + params[:firstname] + "%", "%" + params[:lastname] + "%"])
     
     if @results.empty?
-        @results = Depositor.find(:all, :conditions => ['firstname LIKE ? OR lastname LIKE ?', params[:firstname], params[:lastname]])
+        @results = Depositor.find(:all, :conditions => ['firstname LIKE ? OR lastname LIKE ?', "%" + params[:firstname] + "%", "%" + params[:lastname] + "%"])
     end
     
     if @results.length == 1
