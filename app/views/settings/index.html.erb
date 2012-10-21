@@ -15,6 +15,13 @@
                 				<%= text_field_tag :pettycash, params[:pettycash], :value => Settings.pettycash, :class => "input-large" %>
                 			</div>
                 		</div>
+                		
+                		<div class="control-group">
+                			<%= label_tag :keptfees, t('keptfees'), :class => "control-label" %>
+                			<div class="controls">
+                				<%= text_field_tag :keptfees, params[:keptfees], :value => Settings.keptfees, :class => "input-large" %>
+                			</div>
+                		</div>
                           
                            <div class="control-group">
                                 <div class="controls">

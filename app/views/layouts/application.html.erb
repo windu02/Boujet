@@ -63,15 +63,15 @@
                   <li><%= link_to(t('finditem'), :controller => "items", :action => "searchindex") %></li>
                 </ul>
               </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuration et Bilan <b class="caret"></b></a>
+              <li class="dropdown <% if @settingsMenu -%>active<% end -%>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('settingsandsummary') %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li class="nav-header">Boujet</li>
-                  <li><a href="#"><%= link_to(t('settings'), :controller => "settings", :action => "index") %></a></li>
+                  <li><%= link_to(t('settings'), :controller => "settings", :action => "index") %></li>
                   <li><a href="#">Statistiques</a></li>
                   <li class="divider"></li>
                   <li class="nav-header">Caisse et Comptabilité</li>
-                  <li><a href="#">Bilan Caisse</a></li>
+                  <li><%= link_to(t('balancesheet'), :controller => "sellings", :action => "balancesheet") %></li>
                   <li><a href="#">Editer fiches déposants</a></li>
                 </ul>
               </li>

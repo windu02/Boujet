@@ -1,5 +1,5 @@
 class SellingsController < ApplicationController
-    before_filter :check_is_admin, :only => [:index, :create, :show, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
+    before_filter :check_is_admin, :only => [:index, :create, :show, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell, :summary]
     before_filter :getAdministratorFromCurrentUser, :only => [:create, :show, :showcurrent]
     before_filter :getCurrentSell, :only => [:index, :create, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
     
@@ -202,5 +202,11 @@ class SellingsController < ApplicationController
                     redirect_to :controller => "sellings", :action => "index"
             end
         end
+    end
+    
+    def balancesheet
+        @settings = true
+        
+        @sells = Sell.where(:current => false)
     end
 end

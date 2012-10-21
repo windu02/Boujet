@@ -5,14 +5,14 @@ class SettingsController < ApplicationController
         if current_user.type != "Administrator"
             redirect_to(url_for(:controller => "depositors", :action => "show", :depositorid => current_user.id), :flash => { :error => t('actionnotauthorize') })
         end
-      end
+    end
     
   def index
-    @settings = true
+    @settingsMenu = true
   end
   
   def updateSettings
-    @settings = true
+    @settingsMenu = true
     
     if params[:pettycash] != Settings.pettycash
         Settings.pettycash = params[:pettycash]

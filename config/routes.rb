@@ -66,6 +66,8 @@ Boujet02::Application.routes.draw do
       
       post '/sellings/:itemid/editItemPrice' => 'sellings#editItemPrice'
       
+      get '/sellings/balancesheet' => 'sellings#balancesheet'
+      
       get '/sellings' => 'sellings#index'
       
       post '/settings/updateSettings' => 'settings#updateSettings'
