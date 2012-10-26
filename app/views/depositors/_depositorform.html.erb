@@ -28,16 +28,6 @@
 								</div>
 							</div>
 							
-							<div class="control-group<% if @depositor.errors[:email_confirmation] and ! @depositor.errors[:email_confirmation].empty? %> error<% end %>">
-								<%= f.label :email_confirmation, t('emailconfirmation') + " *", :class => "control-label" %>
-								<div class="controls">
-									<%= f.text_field :email_confirmation, :class => "input-large" %>
-									<% if @depositor.errors[:email_confirmation] and ! @depositor.errors[:email_confirmation].empty? %>
-                                            <span class="help-inline"><%= @depositor.errors[:email_confirmation].join(', ') %></span>
-                                    <% end %>
-								</div>
-							</div>
-							
 							<div class="control-group<% if @depositor.errors[:phone] and ! @depositor.errors[:phone].empty? %> error<% end %>">
 								<%= f.label :phone, t('phone'), :class => "control-label" %>
 								<div class="controls">
