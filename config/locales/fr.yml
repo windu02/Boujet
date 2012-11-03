@@ -115,3 +115,8 @@ fr:
   depositorswithsells: "déposants avec au moins une vente"
   depositorsPerDayChart: "Illustration du nombre de déposants enregistrés par jour"
   sellingsPerHourChart: "Illustration du nombre de ventes par heure"
+  averageitemprice: "Prix moyen d'un article"
+  distributionaverageprice: "Répartition autour du prix moyen"
+  cashbasisaccounting: "Caisse et comptabilité"
+  turnover: "Chiffre d'affaire"
+  profit: "Bénéfice"

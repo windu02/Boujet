@@ -114,3 +114,8 @@ en:
   depositorswithsells: "depositors with almost one sell"
   depositorsPerDayChart: "Chart about number of recorded depositors per day"
   sellingsPerHourChart: "Chart about number of sellings per hour"
+  averageitemprice: "Item average price"
+  distributionaverageprice: "Distribution around the average price"
+  cashbasisaccounting: "Cash basis accounting"
+  turnover: "Turnover"
+  profit: "Profit"

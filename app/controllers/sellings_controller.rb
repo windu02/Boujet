@@ -254,5 +254,34 @@ class SellingsController < ApplicationController
         if @items.count() > 0
             @soldItemsPercent = @soldItems.count() * 100 / @items.count()
         end
+        
+        @itemAveragePrice = 0
+        @soldItemsPercentLTAveragePrice = 0
+        @soldItemsPercentGTAveragePrice = 0
+        total = 0.0
+        if @soldItems.count() > 0
+            @soldItems.each do |si|
+                total += si.price
+            end 
+            @itemAveragePrice = total / @soldItems.count()
+            soldItemsNbLTAveragePrice = 0
+            soldItemsNbGTAveragePrice = 0
+            @soldItems.each do |si|
+                if si.price <= @itemAveragePrice
+                    soldItemsNbLTAveragePrice += 1
+                else
+                    soldItemsNbGTAveragePrice += 1
+                end
+            end
+            @soldItemsPercentLTAveragePrice = soldItemsNbLTAveragePrice * 100 / @soldItems.count()
+            @soldItemsPercentGTAveragePrice = soldItemsNbGTAveragePrice * 100 / @soldItems.count()
+        end
+        
+        @turnover = 0
+        @profit = 0
+        if @soldItems.count() > 0
+            @turnover = total
+            @profit = @turnover*Settings.keptfees.to_f / 100
+        end
     end
 end
