@@ -1,0 +1,159 @@
+            <%= javascript_include_tag    "RGraph.common.core.js" %>
+            <%= javascript_include_tag    "RGraph.bar.js" %>
+            <!--[if lt IE 9]>
+                <%= javascript_include_tag    "excanvas.js" %>
+            <![endif]-->
+
+<div class="row-fluid"> 
+    <div class="page-header">
+        <h1><%= t('statistics') %></h1>
+    </div>
+</div>
+
+<div class="accordion" id="accordion_statistics">
+
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_statistics" href="#collapseDepositors">
+        <%= t('depositors') %>
+      </a>
+    </div>
+    <div id="collapseDepositors" class="accordion-body collapse in">
+      <div class="accordion-inner">
+        <div class="span12">
+            <div class="span2">
+                <span class="label label-info"><%= @depositors.count() %></span> <%= t('depositors') %>
+            </div>
+            <div class="span8">
+                <span class="label label-success"><%= @depositorsWithSells.count() %></span> <%= t('depositorswithsells') %>
+                <div class="progress progress-success progress-striped">
+                    <div class="bar" style="width: <%= @depositorsWithSellsPercent %>%"><%= @depositorsWithSellsPercent %>%</div>
+                </div>
+            </div>
+        </div>
+        <div class="span12">
+            <h5><%= t('depositorsPerDayChart') %></h5>
+            <canvas id="depositorsChartContainer">[No canvas support]</canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_statistics" href="#collapseItems">
+        <%= t('items') %>
+      </a>
+    </div>
+    <div id="collapseItems" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <div class="span12">
+            <div class="span2">
+                <span class="label label-info"><%= @items.count() %></span> <%= t('items') %>
+            </div>
+            <div class="span8">
+                <span class="label label-success"><%= @soldItems.count() %></span> <%= t('itemssold') %>
+                <div class="progress progress-success progress-striped">
+                    <div class="bar" style="width: <%= @soldItemsPercent %>%"><%= @soldItemsPercent %>%</div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_statistics" href="#collapseSells">
+        <%= t('sellings') %>
+      </a>
+    </div>
+    <div id="collapseSells" class="accordion-body collapse">
+      <div class="accordion-inner">
+        <div class="span12">
+            <div class="span2">
+                <span class="label label-info"><%= @sells.count() %></span> <%= t('sellings') %>
+            </div>
+        </div>
+        <div class="span12">
+            <h5><%= t('sellingsPerHourChart') %></h5>
+            <canvas id="sellingsChartContainer">[No canvas support]</canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+    <script>
+        window.onload = function ()
+        {
+            
+        }
+    </script>
+  
+<script type="text/javascript">
+  function basic_bars_depositors(labels, values) {
+        var sorted = values.sort(function(a,b){return a-b});
+        var max = sorted[sorted.length-1];
+        
+        $('depositorsChartContainer').width(50*labels.length + 'px');
+        $('depositorsChartContainer').height(50*max + 'px');
+        
+        
+        var bar4 = new RGraph.Bar('depositorsChartContainer', values);
+            bar4.Set('chart.colors', ['#98CD00']); 
+            bar4.Set('chart.labels', labels);
+            bar4.Set('chart.numyticks', max);
+            bar4.Set('chart.ylabels.count', max);
+            bar4.Set('chart.gutter.left', 35);
+            bar4.Set('chart.variant', '3d');
+            bar4.Set('chart.strokestyle', 'transparent');
+            bar4.Set('chart.hmargin.grouped', 0);
+            bar4.Set('chart.scale.round', true);
+            bar4.Draw();
+    };
+    
+    function basic_bars_sellings(labels, values) {
+          var sorted = values.sort(function(a,b){return a-b});
+          var max = sorted[sorted.length-1];
+          
+          $('sellingsChartContainer').width(50*labels.length + 'px');
+          $('sellingsChartContainer').height(50*max + 'px');
+          
+          var bar4 = new RGraph.Bar('sellingsChartContainer', values);
+            bar4.Set('chart.colors', ['#2A17B1']); 
+            bar4.Set('chart.labels', labels);
+            bar4.Set('chart.numyticks', max);
+            bar4.Set('chart.ylabels.count', max);
+            bar4.Set('chart.gutter.left', 35);
+            bar4.Set('chart.variant', '3d');
+            bar4.Set('chart.strokestyle', 'transparent');
+            bar4.Set('chart.hmargin.grouped', 0);
+            bar4.Set('chart.scale.round', true);
+            bar4.Draw();
+    };
+    
+    depositorsDataLabels = []
+    depositorsDataValues = []
+    
+    <% @depositorsData.each do |depD| %>
+        depositorsDataLabels.push('<%= depD[0] %>');
+        depositorsDataValues.push(<%= depD[1] %>);
+    <% end %>
+    
+    sellingsDataLabels = []
+    sellingsDataValues = []
+    
+    <% @sellsData.each do |selD| %>
+        sellingsDataLabels.push('<%= selD[0] %>');
+        sellingsDataValues.push(<%= selD[1] %>);
+    <% end %>
+    
+    basic_bars_depositors(depositorsDataLabels, depositorsDataValues);
+    
+    basic_bars_sellings(sellingsDataLabels, sellingsDataValues);
+</script>
+  
+  
+</div>

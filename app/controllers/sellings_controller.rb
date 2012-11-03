@@ -209,4 +209,44 @@ class SellingsController < ApplicationController
         
         @sells = Sell.where(:current => false)
     end
+    
+    def statistics
+        @depositors = Depositor.all
+        
+        @depositorsWithSells = @depositors.select {|dep| dep.hasAlmostOneSell? }
+        @depositorsWithSellsPercent = @depositorsWithSells.count() * 100 / @depositors.count()
+        
+        @depositorsDayData = @depositors.map {|dep| dep.created_at.strftime("%F") }
+        
+        @depositorsData = Array.new
+        
+        @depositorsDayData.each do |dd|
+            id = @depositorsData.index {|x| x[0] == dd }
+            if id.nil?
+                @depositorsData.push([dd, 1])
+            else
+                @depositorsData[id][1] += 1
+            end
+        end
+        
+        @sells = Sell.where(:current => false)
+        
+        @sellsHourData = @sells.map {|sel| sel.created_at.strftime("%H") }
+        
+        @sellsData = Array.new
+        
+        @sellsHourData.each do |dd|
+            id = @sellsData.index {|x| x[0] == dd }
+            if id.nil?
+                @sellsData.push([dd, 1])
+            else
+                @sellsData[id][1] += 1
+            end
+        end
+        
+        @items = Item.all
+        
+        @soldItems = @items.select {|it| it.is_sold? }
+        @soldItemsPercent = @soldItems.count() * 100 / @items.count()
+    end
 end

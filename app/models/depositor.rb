@@ -30,4 +30,10 @@ class Depositor < User
   has_many :items, :dependent => :destroy, :foreign_key => 'user_id'
   
   validates :email, :presence => true
+  
+  def hasAlmostOneSell?
+    soldItems = self.items.select {|it| it.is_sold? }
+    
+    return soldItems.count() > 0
+  end
 end

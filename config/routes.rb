@@ -68,6 +68,8 @@ Boujet02::Application.routes.draw do
       
       get '/sellings/balancesheet' => 'sellings#balancesheet'
       
+      get '/sellings/statistics' => 'sellings#statistics'
+      
       get '/sellings' => 'sellings#index'
       
       post '/settings/updateSettings' => 'settings#updateSettings'
