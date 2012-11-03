@@ -208,6 +208,8 @@ class SellingsController < ApplicationController
         @settings = true
         
         @sells = Sell.where(:current => false)
+        
+        @depositors = Depositor.all
     end
     
     def statistics
