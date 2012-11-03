@@ -214,7 +214,10 @@ class SellingsController < ApplicationController
         @depositors = Depositor.all
         
         @depositorsWithSells = @depositors.select {|dep| dep.hasAlmostOneSell? }
-        @depositorsWithSellsPercent = @depositorsWithSells.count() * 100 / @depositors.count()
+        @depositorsWithSellsPercent = 0
+        if @depositors.count() > 0
+            @depositorsWithSellsPercent = @depositorsWithSells.count() * 100 / @depositors.count()
+        end
         
         @depositorsDayData = @depositors.map {|dep| dep.created_at.strftime("%F") }
         
@@ -247,6 +250,9 @@ class SellingsController < ApplicationController
         @items = Item.all
         
         @soldItems = @items.select {|it| it.is_sold? }
-        @soldItemsPercent = @soldItems.count() * 100 / @items.count()
+        @soldItemsPercent = 0
+        if @items.count() > 0
+            @soldItemsPercent = @soldItems.count() * 100 / @items.count()
+        end
     end
 end
