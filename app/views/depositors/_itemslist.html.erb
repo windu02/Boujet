@@ -61,7 +61,7 @@
                                 <td><span class="label label-success"><%= t('sold') %></span></td>
                                 <% else %>
                                     <% if current_user.id != @depositor.id %>
-                                    <td><a href="<%= url_for(:controller => "items", :action => "edit", :depositorid => @depositor.id, :itemid => item.id) %>" class="btn btn-info btn-mini"><i class="icon-pencil icon-white"></i></a>&nbsp;&nbsp;<a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= item.id %>');"><i class="icon-remove icon-white"></i></a></td>
+                                    <td><a href="<%= url_for(:controller => "items", :action => "edit", :depositorid => @depositor.id, :itemid => item.id) %>" class="btn btn-info btn-mini"><i class="icon-pencil icon-white"></i>  <%= t('edit') %></a>&nbsp;&nbsp;<a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= item.id %>');"><i class="icon-remove icon-white"></i> <%= t('delete') %></a></td>
                                     <% else %>
                                     <td><span class="label label-warning"><%= t('tosell') %></span></td>
                                     <% end %>

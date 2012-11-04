@@ -98,7 +98,7 @@
                             <% fees = total * Settings.keptfees.to_f / 100 %>
                             <% turnover += total %>
                             <tr>
-                                <td><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => dep.id) %>">d<%= dep.id %> : <%= dep.firstname %> <%= dep.lastname %></a></td>
+                                <td><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => dep.id) %>">d<%= dep.id %> : <%= dep.firstname.capitalize %> <%= dep.lastname.capitalize %></a></td>
                                 <td><%= total %> €</td>
                                 <td><%= fees %> €</td>
                             </tr>

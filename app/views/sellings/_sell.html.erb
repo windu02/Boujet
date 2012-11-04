@@ -69,8 +69,8 @@
                             <tr>
                                 <td><%= it.id %></td>
                                 <td><%= it.name %></td>
-                                <td><%= it.price %> €&nbsp;&nbsp;<a class="btn btn-info btn-mini" onclick="javascript:displayItemEditPriceForm('<%= it.id %>');"><i class="icon-pencil icon-white"></i></a> (<%= t('negotiation') %> : +/- <%= it.user.negotiation %> €)</td>
-                                <td><a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= it.id %>');"><i class="icon-remove icon-white"></i></a></td>
+                                <td><%= it.price %> €&nbsp;&nbsp;<a class="btn btn-info btn-mini" onclick="javascript:displayItemEditPriceForm('<%= it.id %>');"><i class="icon-pencil icon-white"></i> <%= t('edit') %></a> (<%= t('negotiation') %> : +/- <%= it.user.negotiation %> €)</td>
+                                <td><a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= it.id %>');"><i class="icon-remove icon-white"></i> <%= t('delete') %></a></td>
                             </tr>
                         <% end %>
                         <tr>
