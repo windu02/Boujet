@@ -19,6 +19,8 @@ class DepositorsController < ApplicationController
     
     if current_user.type == "Depositor" and current_user.id == @depositor.id
         @home = true
+    else
+        @depositorsMenu = true
     end
   end
   
