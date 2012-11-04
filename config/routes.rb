@@ -33,6 +33,8 @@ Boujet02::Application.routes.draw do
       
       post '/depositors/searchbyfirstlastname' => 'depositors#searchbyfirstlastname'
       
+      get '/depositors/listall' => 'depositors#listall'
+      
       get '/depositors/:depositorid/edit' => 'depositors#edit'
       
       post '/depositors/:depositorid/update' => 'depositors#update'
@@ -44,6 +46,8 @@ Boujet02::Application.routes.draw do
       post '/items/searchbyitemid' => 'items#searchbyitemid'
       
       post 'items/searchbykeywords' => 'items#searchbykeywords'
+      
+      get '/items/listall' => 'items#listall'
       
       get '/items/:itemid/show' => 'items#show_only'
       

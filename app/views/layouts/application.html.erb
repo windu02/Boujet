@@ -57,11 +57,18 @@
               <% if user_signed_in? and current_user.is_a? Administrator-%>
               <li <% if @recordings -%>class="active"<% end -%>><a href="<%= url_for(:controller=>"recordings", :action=>"index") %>"><%= t('recordings') %></a></li>
               <li <% if @sellMenu -%>class="active"<% end -%>><%= link_to(t('managesellings'), :controller => "sellings", :action => "index") %></li>
-              <li class="dropdown <% if @searchMenu -%>active<% end -%>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('search') %> <b class="caret"></b></a>
+              <li class="dropdown <% if @depositorsMenu -%>active<% end -%>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('depositors') %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><%= link_to(t('findadepositor'), :controller => "depositors", :action => "searchindex") %></li>
+                  <li><%= link_to(t('depositorslist'), :controller => "depositors", :action => "listall") %></li>
+                </ul>
+              </li>
+              <li class="dropdown <% if @itemsMenu -%>active<% end -%>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('items') %> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
                   <li><%= link_to(t('finditem'), :controller => "items", :action => "searchindex") %></li>
+                  <li><%= link_to(t('itemslist'), :controller => "items", :action => "listall") %></li>
                 </ul>
               </li>
               <li class="dropdown <% if @settingsMenu -%>active<% end -%>">

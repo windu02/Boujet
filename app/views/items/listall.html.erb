@@ -1,0 +1,78 @@
+<script language="javascript">
+        function displayItemDeleteConfirmation(depositorid, itemid)
+        {
+                var deleteUrl = '<%= url_for(:controller => "items", :action => "destroy", :depositorid => "%depositorid%", :itemid => "%id%") %>';
+                $('#deleteItemForm').attr("action", deleteUrl.replace('%id%', itemid).replace('%depositorid%', depositorid));
+                $('#deleteItemModal').modal('show');
+        }
+</script>
+
+<div id="deleteItemModal" class="modal hide fade">
+        <div class="modal-header">
+                <a class="close" data-dismiss="modal" >&times;</a>
+                <h3><%= t('warning') %></h3>
+        </div>
+        <div class="modal-body">
+                <p><%= t('itemdeletequestion') %></p>
+        </div>
+        <div class="modal-footer">
+                <% item = Item.new; %>
+                <%= form_for(item, :method => :delete, :url => '', :html => {:class => "form-horizontal", :id => "deleteItemForm"}) do |f| %>
+                        <div class="control-group">
+                                <div class="controls">
+                                        <%= f.submit t('delete'), :class => "btn btn-danger btn-large" %>
+                                        <a href="#" class="btn" data-dismiss="modal" ><%= t('cancel') %></a>
+                                </div>
+                        </div>
+                <% end %>
+        </div>
+</div>
+
+<div class="row-fluid"> 
+    <div class="page-header">
+        <h1><%= t('itemslist') %></h1>
+    </div>
+</div>
+
+<div class="row-fluid">
+        <table class="table table-striped">
+                <thead>
+                <tr>
+                        <th><%= t('itemid') %></th>
+                        <th><%= t('owner') %></th>
+                        <th><%= t('name') %></th>
+                        <th><%= t('brand') %></th>
+                        <th><%= t('type') %></th>
+                        <th><%= t('color') %></th>
+                        <th><%= t('price') %></th>
+                        <th><%= t('other') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if ! @items.empty? %>
+                        <% @items.each do |item| %>
+                                <tr>
+                                <td><%= item.id %></td>
+                                <td><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => item.user.id) %>"><%= item.user.firstname.capitalize %> <%= item.user.lastname.capitalize %></a></td>
+                                <td><a href="<%= url_for(:controller => "items", :action => "show", :depositorid => item.user.id, :itemid => item.id) %>"><%= item.name %></a></td>
+                                <td><%= item.brand %></td>
+                                <td><%= item.type %></td>
+                                <td><%= item.color %></td>
+                                <td><%= item.price %></td>
+                                <td><%= item.other %></td>
+                                <% if item.is_sold? %>
+                                <td><span class="label label-success"><%= t('sold') %></span></td>
+                                <% else %>
+                                    <td><a href="<%= url_for(:controller => "items", :action => "edit", :depositorid => item.user.id, :itemid => item.id) %>" class="btn btn-info btn-mini"><i class="icon-pencil icon-white"></i>  <%= t('edit') %></a>&nbsp;&nbsp;<a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= item.id %>');"><i class="icon-remove icon-white"></i> <%= t('delete') %></a></td>
+                                <% end %>
+                            </tr>
+                        <% end %>
+                <% end %>
+                </tbody>
+        </table>
+        <% if @items.empty? %>
+        <div class="alert alert-info">
+                <%= t('norecordeditem') %>
+        </div>
+        <% end %>
+</div>

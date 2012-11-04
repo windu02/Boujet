@@ -205,7 +205,7 @@ class SellingsController < ApplicationController
     end
     
     def balancesheet
-        @settings = true
+        @settingsMenu = true
         
         @sells = Sell.where(:current => false)
         
@@ -213,6 +213,8 @@ class SellingsController < ApplicationController
     end
     
     def statistics
+        @settingsMenu = true
+        
         @depositors = Depositor.all
         
         @depositorsWithSells = @depositors.select {|dep| dep.hasAlmostOneSell? }

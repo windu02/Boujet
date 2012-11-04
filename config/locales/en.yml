@@ -125,3 +125,8 @@ en:
   depositorid: "Depositor ID"
   firstnameandlastname: "Firstname and Lastname"
   nodepositor: "No recorded depositor."
+  depositorslist: "Depositors list"
+  itemslist: "Items list"
+  owner: "Owner"
+  norecordeditem: "No recorded item."
+  norecordeddepositor: "No recorded depositor."

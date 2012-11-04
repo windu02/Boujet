@@ -1,6 +1,6 @@
 class DepositorsController < ApplicationController
   before_filter :check_is_current_user_or_admin, :only => [:show, :edit, :update, :create, :items]
-  before_filter :check_is_admin, :only => [:searchindex, :searchbydepid, :searchbyfirstlastname]
+  before_filter :check_is_admin, :only => [:searchindex, :searchbydepid, :searchbyfirstlastname, :listall]
 
   def check_is_current_user_or_admin
     if current_user.type != "Administrator" and !(current_user.type == "Depositor" and current_user.id == params[:depositorid].to_i)
@@ -23,6 +23,8 @@ class DepositorsController < ApplicationController
   end
   
   def edit
+    @depositorsMenu = true
+    
     @depositor = Depositor.find(params[:depositorid])
     
     if ! @depositor.update_attributes(params[:depositor])
@@ -40,7 +42,6 @@ class DepositorsController < ApplicationController
   
   def update
     @depositor = Depositor.find(params[:depositorid])
-    
   end
   
   def create       
@@ -83,15 +84,16 @@ class DepositorsController < ApplicationController
   end
   
   def items
+    @depositorsMenu = true
     @depositor = Depositor.find(params[:depositorid])
   end
   
   def searchindex
-    @searchMenu = true
+    @depositorsMenu = true
   end
   
   def searchbydepid
-    @searchMenu = true
+    @depositorsMenu = true
     #search_condition = "%" + search + "%"
     #@results = Depositor.find(:all, :conditions => ['title LIKE ? OR description LIKE ?', search_condition, search_condition])
     
@@ -113,7 +115,7 @@ class DepositorsController < ApplicationController
   end
   
   def searchbyfirstlastname
-    @searchMenu = true
+    @depositorsMenu = true
     
     #search_condition = "%" + search + "%"
     #@results = Depositor.find(:all, :conditions => ['title LIKE ? OR description LIKE ?', search_condition, search_condition])
@@ -129,5 +131,10 @@ class DepositorsController < ApplicationController
     else
         render :template => "depositors/searchresults"
     end
+  end
+  
+  def listall
+    @depositorsMenu = true
+    @depositors = Depositor.all
   end
 end

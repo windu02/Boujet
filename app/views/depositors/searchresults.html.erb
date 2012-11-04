@@ -17,7 +17,7 @@
                     <tbody>
                         <% @results.each do |depositor| %>
                             <tr>
-                                <td><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => depositor.id) %>"><%= depositor.firstname %> <%= depositor.lastname %></a></td>
+                                <td><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => depositor.id) %>">d<%= depositor.id %> : <%= depositor.firstname.capitalize %> <%= depositor.lastname.capitalize %></a></td>
                             </tr>
                         <% end %>
                     </tbody>

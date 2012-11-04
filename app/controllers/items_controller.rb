@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_filter :check_is_current_user_or_admin, :only => [:show]
-  before_filter :check_is_admin, :only => [:create, :edit, :update, :destroy]
+  before_filter :check_is_admin, :only => [:create, :edit, :update, :destroy, :listall]
   
   def check_is_current_user_or_admin
     if current_user.type != "Administrator" and !(current_user.type == "Depositor" and current_user.id == params[:depositorid].to_i)
@@ -15,12 +15,15 @@ class ItemsController < ApplicationController
   end
   
   def show
+    @itemsMenu = true
+    
     @depositor = Depositor.find(params[:depositorid])
                  
     @item = @depositor.items.find(params[:itemid])
   end
   
   def show_only
+        @itemsMenu = true
         @item = Item.find(params[:itemid])
   end
   
@@ -44,6 +47,8 @@ class ItemsController < ApplicationController
   end
   
   def edit
+    @itemsMenu = true
+    
     @depositor = Depositor.find(params[:depositorid])
                  
     @item = @depositor.items.find(params[:itemid])
@@ -85,11 +90,11 @@ class ItemsController < ApplicationController
   end
   
   def searchindex
-    @searchMenu = true
+    @itemsMenu = true
   end
   
   def searchbyitemid
-    @searchMenu = true
+    @itemsMenu = true
     #search_condition = "%" + search + "%"
     #@results = Depositor.find(:all, :conditions => ['title LIKE ? OR description LIKE ?', search_condition, search_condition])
     
@@ -110,6 +115,8 @@ class ItemsController < ApplicationController
   end
   
   def searchbykeywords
+    @itemsMenu = true
+    
     keywords = params[:keywords].strip.squeeze(",").split(',')
     keywords.map! {|kw| "'%" + kw + "%'" }
     
@@ -125,5 +132,10 @@ class ItemsController < ApplicationController
         render :template => "items/searchresults"
     end
   end
-
+  
+  def listall
+    @itemsMenu = true
+    
+    @items = Item.all
+  end
 end

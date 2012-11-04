@@ -126,3 +126,8 @@ fr:
   depositorid: "Identifiant du déposant"
   firstnameandlastname: "Prénom et Nom"
   nodepositor: "Aucun déposant enregistré."
+  depositorslist: "Liste des déposants"
+  itemslist: "Liste des articles"
+  owner: "Propriétaire"
+  norecordeditem: "Aucun article enregistré."
+  norecordeddepositor: "Aucun déposant enregistré."
