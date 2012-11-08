@@ -18,6 +18,10 @@ class SettingsController < ApplicationController
         Settings.pettycash = params[:pettycash]
     end
     
+    if params[:keptfees] != Settings.keptfees
+        Settings.keptfees = params[:keptfees]
+    end
+    
     flash.now[:notice] = t('save_success')
     
     render "settings/index"
