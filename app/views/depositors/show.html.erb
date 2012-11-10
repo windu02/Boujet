@@ -80,18 +80,22 @@
                                             <p><span class="label label-info"><i class="icon-signal icon-white"></i> <%= t('phone') %></span> : <span><% if @depositor.phone.empty? %><%= t('nophone') %><% else %><%= @depositor.phone %><% end %></span></p>
                                            <p><span class="label label-info"><i class="icon-barcode icon-white"></i> <%= t('negotiation') %></span> : <span><%= @depositor.negotiation %> €</span></p>
                                            <p><span class="label label-info"><i class="icon-map-marker icon-white"></i> <%= t('address') %></span> :
+                                                <% if ! @depositor.address.nil? and ! @depositor.address.empty? %>
                                                 <div class="span3 offset1 well well-small">
                                                     <address>
-                                                        <%= @depositor.address.street1 %><br>
-                                                        <% if ! @depositor.address.street2.empty? %>
+                                                        <% if ! @depositor.address.street1.nil? %><%= @depositor.address.street1 %><% end %><br>
+                                                        <% if ! @depositor.address.street2.nil? and ! @depositor.address.street2.empty? %>
                                                                 <%= @depositor.address.street2 %><br>
                                                         <% end %>
-                                                        <% if ! @depositor.address.street3.empty? %>
+                                                        <% if ! @depositor.address.street3.nil? and ! @depositor.address.street3.empty? %>
                                                                 <%= @depositor.address.street3 %><br>
                                                         <% end %>
-                                                        <%= @depositor.address.zipcode %> <%= @depositor.address.city %>
+                                                        <% if ! @depositor.address.zipcode.nil? %><%= @depositor.address.zipcode %><% end %> <% if ! @depositor.address.city.nil? %><%= @depositor.address.city %><% end %>
                                                     </address>
                                                 </div>
+                                                <% else %>
+                                                    <%= t('noaddress') %>
+                                                <% end %>
                                             </p>
                             </div>
                         </div>

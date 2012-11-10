@@ -41,10 +41,13 @@
 							<div class="control-group<% if @item.errors[:price] and ! @item.errors[:price].empty? %> error<% end %>">
 								<%= f.label :price, t('price') + " *", :class => "control-label" %>
 								<div class="controls">
-									<%= f.text_field :price, :class => "input-large" %>
-									<% if @item.errors[:price] and ! @item.errors[:price].empty? %>
-                                            <span class="help-inline"><%= @item.errors[:price].join(', ') %></span>
-                                    <% end %>
+								    <div class="input-prepend">
+                                        <span class="add-on">€</span>
+									       <%= f.text_field :price, :class => "input-large" %>
+        									<% if @item.errors[:price] and ! @item.errors[:price].empty? %>
+                                                    <span class="help-inline"><%= @item.errors[:price].join(', ') %></span>
+                                            <% end %>
+                                    </div>
 								</div>
 							</div>
 							

@@ -80,7 +80,7 @@ class DepositorsController < ApplicationController
                 Depositor.find(@depositor.id).send_reset_password_instructions
                 
                 flash[:notice] = t('save_success')
-                redirect_to :controller => "recordings", :action => "item", :depositorid => @depositor.id
+                redirect_to :controller => "depositors", :action => "show", :depositorid => @depositor.id
         end
         
   end
@@ -122,10 +122,10 @@ class DepositorsController < ApplicationController
     #search_condition = "%" + search + "%"
     #@results = Depositor.find(:all, :conditions => ['title LIKE ? OR description LIKE ?', search_condition, search_condition])
     
-    @results = Depositor.find(:all, :conditions => ['firstname LIKE ? AND lastname LIKE ?', "%" + params[:firstname] + "%", "%" + params[:lastname] + "%"])
+    @results = Depositor.find(:all, :conditions => ['lower(firstname) LIKE ? AND lower(lastname) LIKE ?', "%" + params[:firstname].downcase + "%", "%" + params[:lastname].downcase + "%"])
     
     if @results.empty?
-        @results = Depositor.find(:all, :conditions => ['firstname LIKE ? OR lastname LIKE ?', "%" + params[:firstname] + "%", "%" + params[:lastname] + "%"])
+        @results = Depositor.find(:all, :conditions => ['lower(firstname) LIKE ? OR lower(lastname) LIKE ?', "%" + params[:firstname].downcase + "%", "%" + params[:lastname].downcase + "%"])
     end
     
     if @results.length == 1

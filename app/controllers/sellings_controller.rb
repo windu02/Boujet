@@ -73,9 +73,9 @@ class SellingsController < ApplicationController
     
     def searchItemToSell
         keywords = params[:keywords].strip.squeeze(",").split(',')
-        keywords.map! {|kw| "'%" + kw + "%'" }
+        keywords.map! {|kw| "'%" + kw.downcase + "%'" }
         
-        conditions = keywords.map {|kw| "name LIKE " + kw + " OR type LIKE " + kw + " OR brand LIKE " + kw + " OR color LIKE " + kw + " OR other LIKE " + kw }
+        conditions = keywords.map {|kw| "lower(name) LIKE " + kw + " OR lower(type) LIKE " + kw + " OR lower(brand) LIKE " + kw + " OR lower(color) LIKE " + kw + " OR lower(other) LIKE " + kw }
         
         search_condition = conditions.join(' OR ')
         
@@ -83,7 +83,7 @@ class SellingsController < ApplicationController
         
         if @results.empty?
             flash[:error] = t('no_item_found')
-            redirect_to :controller => "items", :action => "show_only", :itemid => @results.first.id
+            redirect_to :controller => "sellings", :action => "showcurrent"
         else
             render :template => "sellings/searchItemToSell"
         end
@@ -223,16 +223,58 @@ class SellingsController < ApplicationController
             @depositorsWithSellsPercent = @depositorsWithSells.count() * 100 / @depositors.count()
         end
         
-        @depositorsDayData = @depositors.map {|dep| dep.created_at.strftime("%F") }
+        @depositorsDayData = @depositors.map {|dep| dep.created_at.strftime("%d/%m/%Y") }
         
-        @depositorsData = Array.new
+        @depositorsDataPerDay = Array.new
         
         @depositorsDayData.each do |dd|
-            id = @depositorsData.index {|x| x[0] == dd }
+            id = @depositorsDataPerDay.index {|x| x[0] == dd }
             if id.nil?
-                @depositorsData.push([dd, 1])
+                @depositorsDataPerDay.push([dd, 1])
             else
-                @depositorsData[id][1] += 1
+                @depositorsDataPerDay[id][1] += 1
+            end
+        end
+        
+        @depositorsDataPerDayPerHourFlatten = Array.new
+        
+        depositorsDataPerDayPerHour = Array.new
+        
+        @depositorsDataPerDay.each do |perday|
+            dd = perday[0]
+            
+            idDay = depositorsDataPerDayPerHour.index {|x| x[0] == dd }
+            
+            if idDay.nil?
+                depositorsDataPerDayPerHour.push([dd, Array.new])
+                idDay = depositorsDataPerDayPerHour.index {|x| x[0] == dd }
+            end
+            
+            
+            depForDay = Array.new
+            @depositors.each do |dep|
+                if dep.created_at.strftime("%d/%m/%Y") == dd
+                    depForDay.push(dep)
+                end
+            end
+            
+            depHourData = depForDay.map {|dep| dep.created_at.strftime("%H") }
+            
+            depHourData.each do |depHour|
+                id = depositorsDataPerDayPerHour.index {|x| x[0] == dd && x[1][0] == depHour }
+                if id.nil?
+                    depositorsDataPerDayPerHour[idDay][1].push([depHour, 1])
+                else
+                    depositorsDataPerDayPerHour[idDay][1][id][1] += 1
+                end
+            end
+        end
+        
+        depositorsDataPerDayPerHour.each do |depday|
+            dd = depday[0]
+            
+            depday[1].each do |dephour|
+                @depositorsDataPerDayPerHourFlatten.push([dd + " " + dephour[0] + "h",dephour[1]])
             end
         end
         
@@ -243,9 +285,9 @@ class SellingsController < ApplicationController
         @sellsData = Array.new
         
         @sellsHourData.each do |dd|
-            id = @sellsData.index {|x| x[0] == dd }
+            id = @sellsData.index {|x| x[0] == dd + "h" }
             if id.nil?
-                @sellsData.push([dd, 1])
+                @sellsData.push([dd + "h", 1])
             else
                 @sellsData[id][1] += 1
             end
@@ -267,7 +309,7 @@ class SellingsController < ApplicationController
             @soldItems.each do |si|
                 total += si.price
             end 
-            @itemAveragePrice = total / @soldItems.count()
+            @itemAveragePrice = (total / @soldItems.count()).round(2)
             soldItemsNbLTAveragePrice = 0
             soldItemsNbGTAveragePrice = 0
             @soldItems.each do |si|

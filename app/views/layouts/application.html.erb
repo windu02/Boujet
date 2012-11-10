@@ -145,7 +145,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Boujet / 2012<% todayDate = Date.today; if(todayDate.year > 2012) -%> - <%= todayDate.year %><% end -%> <%= t('developedby') %> <a href="http://www.christianbrel.fr/">Christian Brel</a></p>
+        <p><a href="<%= url_for(:locale => 'en') %>"><%= image_tag('flags/langen.png', :width => '40px') %></a>&nbsp;&nbsp;<a href="<%= url_for(:locale => 'fr') %>"><%= image_tag('flags/langfr.png', :width => '35px') %></a>&nbsp;&nbsp;&copy; Boujet / 2012<% todayDate = Date.today; if(todayDate.year > 2012) -%> - <%= todayDate.year %><% end -%> <%= t('developedby') %> <a href="http://www.christianbrel.fr/">Christian Brel</a></p>
       </footer>
 
     </div><!--/.fluid-container-->

@@ -17,4 +17,17 @@ class Address < ActiveRecord::Base
   belongs_to :user
   
   attr_accessible :street1, :street2, :street3, :zipcode, :city
+  
+  def empty?
+    if (self.street1.nil? or self.street1.empty?) and
+       (self.street2.nil? or self.street2.empty?) and
+       (self.street3.nil? or self.street3.empty?) and
+       (self.zipcode.nil? or self.zipcode.empty?) and
+       (self.city.nil? or self.city.empty?)
+       
+       return true
+    else
+        return false
+    end
+  end
 end

@@ -118,9 +118,9 @@ class ItemsController < ApplicationController
     @itemsMenu = true
     
     keywords = params[:keywords].strip.squeeze(",").split(',')
-    keywords.map! {|kw| "'%" + kw + "%'" }
+    keywords.map! {|kw| "'%" + kw.downcase + "%'" }
     
-    conditions = keywords.map {|kw| "name LIKE " + kw + " OR type LIKE " + kw + " OR brand LIKE " + kw + " OR color LIKE " + kw + " OR other LIKE " + kw }
+    conditions = keywords.map {|kw| "lower(name) LIKE " + kw + " OR lower(type) LIKE " + kw + " OR lower(brand) LIKE " + kw + " OR lower(color) LIKE " + kw + " OR lower(other) LIKE " + kw }
     
     search_condition = conditions.join(' OR ')
     
