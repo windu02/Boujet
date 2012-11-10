@@ -3,3 +3,8 @@
     height: 300px;
     margin: 8px auto;
 }
+
+.sellCardModal {
+    width: 80%;
+    left: 35%;
+}

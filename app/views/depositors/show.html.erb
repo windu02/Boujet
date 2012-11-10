@@ -1,3 +1,55 @@
+<script language="JavaScript"> 
+    function imprime_zone(url, obj) {
+//        var zi = document.getElementById(obj).innerHTML;
+        // Ouvre une nouvelle fenetre
+        var f = window.open(url, "ZoneImpr", "height=100, width=400,toolbar=0, menubar=0, scrollbars=1, resizable=1,status=0, location=0, left=30, top=10");
+        // Définit le Style de la page
+        //f.document.body.style.color = '#000000';
+        //f.document.body.style.backgroundColor = '#FFFFFF';
+        f.document.body.style.padding = "10px";
+        // Ajoute les Données
+        f.document.title = "<%= t('boujetcard') %>";
+//        f.document.body.innerHTML += " " + zi + " ";
+        // Imprime et ferme la fenetre
+        setTimeout(function() {
+            f.window.print();
+            f.window.close();
+            },1000);        
+        
+        
+        return true;
+    }
+</script>
+
+<!-- Modal -->
+<div id="beforeSellCardModal" class="modal hide fade sellCardModal" tabindex="-1" role="dialog" aria-labelledby="cardModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="myModalLabel"><%= t('beforesellcard') %></h3>
+  </div>
+  <div class="modal-body" id="beforesellcardbody">
+    <%= image_tag("loadingcircle.gif") %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><%= t('close') %></button>
+    <button class="btn btn-primary" onclick="javascript:imprime_zone('<%= url_for(:controller => "depositors", :action => "beforesellcard", :depositorid => @depositor.id) %>', 'beforesellcardbody');"><%= t('print') %></button>
+  </div>
+</div>
+
+<div id="afterSellCardModal" class="modal hide fade sellCardModal" tabindex="-1" role="dialog" aria-labelledby="cardModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="myModalLabel"><%= t('aftersellcard') %></h3>
+  </div>
+  <div class="modal-body" id="aftersellcardbody">
+    <%= image_tag("loadingcircle.gif") %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><%= t('close') %></button>
+    <button class="btn btn-primary" onclick="javascript:imprime_zone('<%= url_for(:controller => "depositors", :action => "aftersellcard", :depositorid => @depositor.id) %>', 'aftersellcardbody');"><%= t('print') %></button>
+  </div>
+</div>
+
 <div class="row-fluid"> 
     <div class="page-header">
         <h1><%= t('infoson') %> <%= @depositor.firstname %> <%= @depositor.lastname %></h1>
@@ -11,6 +63,9 @@
             <ul class="nav nav-tabs">
                     <li class="active"><a href="#profil" data-toggle="tab"><%= t('profil') %></a></li>
                     <li><a href="#itemslist" data-toggle="tab"><%= t('items') %></a></li>
+                    
+                    <div class="pull-right"><a data-target="#afterSellCardModal" data-remote="<%= url_for(:controller => "depositors", :action => "aftersellcard", :depositorid => @depositor.id) %>" role="button" class="btn btn-success" data-toggle="modal"><%= t('aftersellcard') %></a></div>
+                    <div class="pull-right"><a data-target="#beforeSellCardModal" data-remote="<%= url_for(:controller => "depositors", :action => "beforesellcard", :depositorid => @depositor.id) %>" role="button" class="btn btn-info" data-toggle="modal"><%= t('beforesellcard') %></a>&nbsp;&nbsp;</div>
             </ul>
     
             <!-- Tabs content -->
@@ -25,7 +80,8 @@
                                             <p><span class="label label-info"><i class="icon-signal icon-white"></i> <%= t('phone') %></span> : <span><% if @depositor.phone.empty? %><%= t('nophone') %><% else %><%= @depositor.phone %><% end %></span></p>
                                            <p><span class="label label-info"><i class="icon-barcode icon-white"></i> <%= t('negotiation') %></span> : <span><%= @depositor.negotiation %> €</span></p>
                                            <p><span class="label label-info"><i class="icon-map-marker icon-white"></i> <%= t('address') %></span> :
-                                                <div class="span3 offset1 well well-small">                 
+                                                <div class="span3 offset1 well well-small">
+                                                    <address>
                                                         <%= @depositor.address.street1 %><br>
                                                         <% if ! @depositor.address.street2.empty? %>
                                                                 <%= @depositor.address.street2 %><br>
@@ -33,7 +89,8 @@
                                                         <% if ! @depositor.address.street3.empty? %>
                                                                 <%= @depositor.address.street3 %><br>
                                                         <% end %>
-                                                        <%= @depositor.address.zipcode %> <%= @depositor.address.city %> </p>
+                                                        <%= @depositor.address.zipcode %> <%= @depositor.address.city %>
+                                                    </address>
                                                 </div>
                                             </p>
                             </div>

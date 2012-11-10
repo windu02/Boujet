@@ -1,6 +1,6 @@
 class DepositorsController < ApplicationController
   before_filter :check_is_current_user_or_admin, :only => [:show, :edit, :update, :create, :items]
-  before_filter :check_is_admin, :only => [:searchindex, :searchbydepid, :searchbyfirstlastname, :listall]
+  before_filter :check_is_admin, :only => [:searchindex, :searchbydepid, :searchbyfirstlastname, :listall, :beforesellcard, :aftersellcard]
 
   def check_is_current_user_or_admin
     if current_user.type != "Administrator" and !(current_user.type == "Depositor" and current_user.id == params[:depositorid].to_i)
@@ -138,5 +138,17 @@ class DepositorsController < ApplicationController
   def listall
     @depositorsMenu = true
     @depositors = Depositor.all
+  end
+  
+  def beforesellcard
+    @depositor = Depositor.find(params[:depositorid])
+    
+    render :partial => "depositors/beforesellcard"
+  end
+  
+  def aftersellcard
+    @depositor = Depositor.find(params[:depositorid])
+    
+    render :partial => "depositors/aftersellcard"
   end
 end

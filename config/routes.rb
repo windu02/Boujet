@@ -35,6 +35,10 @@ Boujet02::Application.routes.draw do
       
       get '/depositors/listall' => 'depositors#listall'
       
+      get '/depositors/:depositorid/beforesellcard' => 'depositors#beforesellcard'
+      
+      get '/depositors/:depositorid/aftersellcard' => 'depositors#aftersellcard'
+      
       get '/depositors/:depositorid/edit' => 'depositors#edit'
       
       post '/depositors/:depositorid/update' => 'depositors#update'
