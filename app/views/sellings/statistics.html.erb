@@ -67,7 +67,7 @@
             <div class="span8">
                 <%= t('distributionaverageprice') %>
                 <div class="progress progress-striped">
-                    <div class="bar bar-info" style="width: <%= @soldItemsPercentLTAveragePrice %>%"><%= @soldItemsPercentLTAveragePrice %>% &lt; <%= @itemAveragePrice %> €</div>
+                    <div class="bar bar-info" style="width: <%= @soldItemsPercentLTAveragePrice %>%"><%= @soldItemsPercentLTAveragePrice %>% &lt;= <%= @itemAveragePrice %> €</div>
                     <div class="bar bar-success" style="width: <%= @soldItemsPercentGTAveragePrice %>%"><%= @soldItemsPercentGTAveragePrice %>% &gt; <%= @itemAveragePrice %> €</div>
                 </div>
             </div>
