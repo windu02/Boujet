@@ -8,4 +8,4 @@
 
 admin_user = AdminUser.create([{ :email => "toremove@admin.com", :password => "toremove", :password_confirmation => "toremove" }])
 
-configs = Config.create([{ :key => "pettycash", :value => "0" }])
+configs = Config.create([{ :key => "pettycash", :value => "0" }, { :key => "keptfees", :value => "20" }])

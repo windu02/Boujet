@@ -64,6 +64,22 @@
                             <td><strong><u>Total + <%= t('pettycash') %></u>: </strong></td>
                             <td><span class="badge badge-important"><%= totalSellPettyCash %> €</span></td>
                         </tr>
+                        <% profit = totalSell * Settings.keptfees.to_f / 100 %>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="success">
+                            <td>&nbsp;</td>
+                            <td><strong><u><%= t('profit') %></u>: </strong></td>
+                            <td><span class="badge badge-success"><%= profit %> €</span></td>
+                        </tr>
+                        <tr class="error">
+                            <td>&nbsp;</td>
+                            <td><strong><u><%= t('profit') %> + <%= t('pettycash') %></u>: </strong></td>
+                            <td><span class="badge badge-important"><%= profit + Settings.pettycash.to_f %> €</span></td>
+                        </tr>
                 <% end %>
                 </tbody>
         </table>
