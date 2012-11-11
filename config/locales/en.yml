@@ -143,3 +143,8 @@ en:
   returntoprofil: "Return to profil"
   noaddress: "No known address."
   returntocurrentselling: "Return to current selling"
+  error: "Error"
+  pagenotfound: "Page not found"
+  isnotavalidpage: "is not a valid page."
+  notabletoservepage: "We are not able to serve this page."
+  tryagainlater: "Try again later."

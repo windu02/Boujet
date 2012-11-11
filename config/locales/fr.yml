@@ -144,3 +144,8 @@ fr:
   returntoprofil: "Retour au profil"
   noaddress: "Aucune adresse renseignée."
   returntocurrentselling: "Retour à la vente en cours"
+  error: "Erreur"
+  pagenotfound: "Page non trouvée"
+  isnotavalidpage: "n'est pas une page valide."
+  notabletoservepage: "Il n'est pas possible de vous fournir cette page."
+  tryagainlater: "Veuillez réessayer ultérieurement."
