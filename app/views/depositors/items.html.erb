@@ -1,7 +1,7 @@
                         <!-- Main page title -->
                         <div class="row-fluid"> 
                             <div class="page-header">
-                                    <h1><%= t('items') %> <small><%= t('forsellto') %> <% if @depositor.id == current_user.id -%><%= t('you') %><% else -%><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => @depositor.id) %>"><%= @depositor.firstname.capitalize %> <%= @depositor.lastname.capitalize %><% end %> (<%= t('returntoprofil') %>)</a></small></h1>
+                                    <h1><%= t('items') %> <small><%= t('forsellto') %> <% if @depositor.id == current_user.id -%><%= t('you') %><% else -%><a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => @depositor.id) %>"><%= @depositor.firstname.capitalize %> <%= @depositor.lastname.capitalize %> (<%= t('returntoprofil') %>)<% end %></a></small></h1>
                             </div>
                         </div>
                         

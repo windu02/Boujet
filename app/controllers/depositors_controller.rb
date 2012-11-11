@@ -1,6 +1,6 @@
 class DepositorsController < ApplicationController
-  before_filter :check_is_current_user_or_admin, :only => [:show, :edit, :update, :create, :items]
-  before_filter :check_is_admin, :only => [:searchindex, :searchbydepid, :searchbyfirstlastname, :listall, :beforesellcard, :aftersellcard]
+  before_filter :check_is_current_user_or_admin, :only => [:show, :edit, :update, :create, :items, :beforesellcard, :aftersellcard]
+  before_filter :check_is_admin, :only => [:searchindex, :searchbydepid, :searchbyfirstlastname, :listall]
 
   def check_is_current_user_or_admin
     if current_user.type != "Administrator" and !(current_user.type == "Depositor" and current_user.id == params[:depositorid].to_i)
@@ -28,6 +28,10 @@ class DepositorsController < ApplicationController
     @depositorsMenu = true
     
     @depositor = Depositor.find(params[:depositorid])
+  end
+  
+  def update
+    @depositor = Depositor.find(params[:depositorid])
     
     if ! @depositor.update_attributes(params[:depositor])
             modifFailed = true
@@ -40,10 +44,6 @@ class DepositorsController < ApplicationController
             flash[:notice] = t('edit_success')
             redirect_to :controller => "depositors", :action => "show", :depositorid => @depositor.id
     end
-  end
-  
-  def update
-    @depositor = Depositor.find(params[:depositorid])
   end
   
   def create       

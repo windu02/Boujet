@@ -25,6 +25,10 @@ class ItemsController < ApplicationController
   def show_only
         @itemsMenu = true
         @item = Item.find(params[:itemid])
+        
+        if current_user.type != "Administrator" and !(current_user.type == "Depositor" and ! current_user.items.index(@item).nil?)
+            redirect_to(url_for(:controller => "depositors", :action => "show", :depositorid => current_user.id), :flash => { :error => t('actionnotauthorize') })
+        end
   end
   
   def create 
