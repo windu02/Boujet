@@ -78,6 +78,7 @@ en:
   itemsellremovequestion: "Remove item from sell ?"
   remove: "Remove"
   finditem: "Find item"
+  itemnotfound: "Item not found"
   additemtosell: "Add item to sell"
   managesellings: "Manage sellings"
   edititemprice: "Edit item's price"

@@ -48,25 +48,32 @@ class SellingsController < ApplicationController
         if @currentSell.nil?
            redirect_to(url_for(:controller => "sellings", :action => "index"), :flash => { :error => t('actionnotauthorize') })       
        else
-            soldItem = Item.find(params[:itemid])
-            
-            if soldItem.is_sold?
-                flash[:error] = t('itemalreadysold')
-                
+            soldItem = Item.find_by_id(params[:itemid])
+        
+            if soldItem.nil?
+                flash[:error] = t('itemnotfound')
+                    
                 redirect_to :controller => "sellings", :action => "showcurrent"
             else
-               @currentSell.items.push(soldItem)
-               
-                if ! @currentSell.save
-                        modifFailed = true
-                end
-                
-                if modifFailed
-                        flash[:error] = t('save_failed')
+            
+                if soldItem.is_sold?
+                    flash[:error] = t('itemalreadysold')
+                    
+                    redirect_to :controller => "sellings", :action => "showcurrent"
                 else
-                        flash[:notice] = t('save_success')
+                   @currentSell.items.push(soldItem)
+                   
+                    if ! @currentSell.save
+                            modifFailed = true
+                    end
+                    
+                    if modifFailed
+                            flash[:error] = t('save_failed')
+                    else
+                            flash[:notice] = t('save_success')
+                    end
+                    redirect_to :controller => "sellings", :action => "showcurrent"
                 end
-                redirect_to :controller => "sellings", :action => "showcurrent"
             end
        end
     end

@@ -72,6 +72,7 @@ fr:
   donewsell: "Effectuer une nouvelle vente"
   additemtosell: "Ajouter un article à la vente"
   finditem: "Trouver un article"
+  itemnotfound: "Article non trouvé"
   sellnumber: "Vente numéro"
   itemslistfromsell: "Articles de la vente"
   itemid: "Identifiant Article"
