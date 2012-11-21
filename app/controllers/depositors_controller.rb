@@ -137,7 +137,7 @@ class DepositorsController < ApplicationController
   
   def listall
     @depositorsMenu = true
-    @depositors = Depositor.all
+    @depositors = Depositor.paginate(:page => params[:page], :per_page => 20).order(:lastname)
   end
   
   def beforesellcard

@@ -21,4 +21,7 @@
                 <%= t('norecordeddepositor') %>
         </div>
         <% end %>
+        <div class="span6 pull-right">
+            <%= will_paginate @depositors, :renderer => BootstrapPagination::Rails %>
+        </div>
 </div>

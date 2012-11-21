@@ -56,3 +56,6 @@ end
 gem 'http_accept_language'
 
 gem 'ledermann-rails-settings', :require => 'rails-settings'
+
+gem 'will_paginate', '~> 3.0'
+gem 'will_paginate-bootstrap'

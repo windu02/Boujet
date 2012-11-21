@@ -159,6 +159,9 @@ GEM
       multi_json (~> 1.0, >= 1.0.2)
     warden (1.1.1)
       rack (>= 1.0)
+    will_paginate (3.0.3)
+    will_paginate-bootstrap (0.2.1)
+      will_paginate (>= 3.0.3)
 
 PLATFORMS
   ruby
@@ -182,3 +185,5 @@ DEPENDENCIES
   sqlite3
   turn (= 0.8.2)
   uglifier (>= 1.0.3)
+  will_paginate (~> 3.0)
+  will_paginate-bootstrap

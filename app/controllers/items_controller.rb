@@ -140,6 +140,6 @@ class ItemsController < ApplicationController
   def listall
     @itemsMenu = true
     
-    @items = Item.all
+    @items = Item.paginate(:page => params[:page], :per_page => 20).order(:name)
   end
 end

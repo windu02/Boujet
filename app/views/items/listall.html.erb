@@ -76,4 +76,7 @@
                 <%= t('norecordeditem') %>
         </div>
         <% end %>
+        <div class="span6 pull-right">
+            <%= will_paginate @items, :renderer => BootstrapPagination::Rails %>
+        </div>
 </div>
