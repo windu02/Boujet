@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
                 flash.now[:error] = t('save_failed')
                 render :template => "recordings/item"
         else    
-                flash[:notice] = t('save_success')
+                flash[:notice] = t('item') + " " + @item.id.to_s + " : " + t('save_success')
                 redirect_to :controller => "depositors", :action => "items", :depositorid => @depositor.id
         end
         

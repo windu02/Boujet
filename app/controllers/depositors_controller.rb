@@ -88,6 +88,7 @@ class DepositorsController < ApplicationController
   def items
     @depositorsMenu = true
     @depositor = Depositor.find(params[:depositorid])
+    @depositor.items.reverse!
   end
   
   def searchindex
