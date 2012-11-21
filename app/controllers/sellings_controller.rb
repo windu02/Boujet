@@ -222,7 +222,7 @@ class SellingsController < ApplicationController
     def statistics
         @settingsMenu = true
         
-        @depositors = Depositor.all
+        @depositors = Depositor.order(:created_at)
         
         @depositorsWithSells = @depositors.select {|dep| dep.hasAlmostOneSell? }
         @depositorsWithSellsPercent = 0
@@ -268,7 +268,8 @@ class SellingsController < ApplicationController
             depHourData = depForDay.map {|dep| dep.created_at.strftime("%H") }
             
             depHourData.each do |depHour|
-                id = depositorsDataPerDayPerHour.index {|x| x[0] == dd && x[1][0] == depHour }
+                id = depositorsDataPerDayPerHour[idDay][1].index {|x| x[0] == depHour}
+                
                 if id.nil?
                     depositorsDataPerDayPerHour[idDay][1].push([depHour, 1])
                 else
