@@ -34,8 +34,22 @@
         <div class="span12">
             <h5><%= t('depositorsPerDayChart') %></h5>
             <canvas id="depositorsChartContainer">[No canvas support]</canvas>
+            <% if @depositorsDataPerDay.count() > 0 %>
+            <ul>
+                <% @depositorsDataPerDay.each do |depD| %>
+                    <li><%= depD[0] %> : <%= depD[1] %> <%= t('depositors') %></li>
+                <% end %>
+            </ul>
+            <% end %>
             <h5><%= t('depositorsPerDayPerHourChart') %></h5>
             <canvas id="depositorsHourChartContainer">[No canvas support]</canvas>
+            <% if @depositorsDataPerDayPerHourFlatten.count() > 0 %>
+            <ul>
+                <% @depositorsDataPerDayPerHourFlatten.each do |depDH| %>
+                    <li><%= depDH[0] %> : <%= depDH[1] %> <%= t('depositors') %></li>
+                <% end %>
+            </ul>
+            <% end %>
         </div>
       </div>
     </div>
@@ -51,7 +65,12 @@
       <div class="accordion-inner">
         <div class="span12">
             <div class="span2">
-                <span class="label label-info"><%= @items.count() %></span> <%= t('items') %>
+                <p>
+                    <span class="label label-info"><%= @items.count() %></span> <%= t('items') %>
+                </p>
+                <p>
+                    <span class="label label-info"><%= @averageItemPerDepositors %></span> <%= t('items') %> <%= t('inaverage') %> <%= t('perdepositor') %>
+                </p>
             </div>
             <div class="span8">
                 <span class="label label-success"><%= @soldItems.count() %></span> <%= t('itemssold') %>
@@ -92,6 +111,13 @@
         <div class="span12">
             <h5><%= t('sellingsPerHourChart') %></h5>
             <canvas id="sellingsChartContainer">[No canvas support]</canvas>
+            <% if @sellsData.count() > 0 %>
+            <ul>
+                <% @sellsData.each do |sD| %>
+                    <li><%= sD[0] %> : <%= sD[1] %> <%= t('sellings') %></li>
+                <% end %>
+            </ul>
+            <% end %>
         </div>
       </div>
     </div>

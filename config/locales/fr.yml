@@ -160,3 +160,5 @@ fr:
   newpassword: "Nouveau mot de passe"
   confirmnewpassword: "Confirmer le nouveau mot de passe"
   minimumsixchar: "minimum 6 caractères"
+  inaverage: "en moyenne"
+  perdepositor: "par déposant"

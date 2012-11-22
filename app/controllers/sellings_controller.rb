@@ -337,5 +337,7 @@ class SellingsController < ApplicationController
             @turnover = total
             @profit = @turnover*Settings.keptfees.to_f / 100
         end
+        
+        @averageItemPerDepositors = @items.count() / @depositors.count()
     end
 end

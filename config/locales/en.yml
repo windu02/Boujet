@@ -158,3 +158,5 @@ en:
   newpassword: "New password"
   confirmnewpassword: "Confirm new password"
   minimumsixchar: "minimum 6 characters"
+  inaverage: "in average"
+  perdepositor: "per depositor"
