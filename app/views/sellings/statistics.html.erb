@@ -1,8 +1,4 @@
-            <%= javascript_include_tag    "RGraph.common.core.js" %>
-            <%= javascript_include_tag    "RGraph.bar.js" %>
-            <!--[if lt IE 9]>
-                <%= javascript_include_tag    "excanvas.js" %>
-            <![endif]-->
+<%= javascript_include_tag    "highcharts.js" %>
 
 <div class="row-fluid"> 
     <div class="page-header">
@@ -32,23 +28,11 @@
             </div>
         </div>
         <div class="span12">
-            <h5><%= t('depositorsPerDayChart') %></h5>
-            <canvas id="depositorsChartContainer">[No canvas support]</canvas>
-            <% if @depositorsDataPerDay.count() > 0 %>
-            <ul>
-                <% @depositorsDataPerDay.each do |depD| %>
-                    <li><%= depD[0] %> : <%= depD[1] %> <%= t('depositors') %></li>
-                <% end %>
-            </ul>
-            <% end %>
-            <h5><%= t('depositorsPerDayPerHourChart') %></h5>
-            <canvas id="depositorsHourChartContainer">[No canvas support]</canvas>
-            <% if @depositorsDataPerDayPerHourFlatten.count() > 0 %>
-            <ul>
-                <% @depositorsDataPerDayPerHourFlatten.each do |depDH| %>
-                    <li><%= depDH[0] %> : <%= depDH[1] %> <%= t('depositors') %></li>
-                <% end %>
-            </ul>
+            <div id="depositorsChartContainer" style="max-width: 50%;border:1px solid black;"></div>
+            <% @depositorsDataPerDayPerHour.each do |depday|
+                dd = depday[0]
+            %>
+                <div id="depositorsHourChartContainer<%= dd.gsub('/', '_') %>" style="max-width: 50%;border:1px solid black;margin: 1px 1px;" class="pull-left"></div>
             <% end %>
         </div>
       </div>
@@ -109,15 +93,7 @@
             </div>
         </div>
         <div class="span12">
-            <h5><%= t('sellingsPerHourChart') %></h5>
-            <canvas id="sellingsChartContainer">[No canvas support]</canvas>
-            <% if @sellsData.count() > 0 %>
-            <ul>
-                <% @sellsData.each do |sD| %>
-                    <li><%= sD[0] %> : <%= sD[1] %> <%= t('sellings') %></li>
-                <% end %>
-            </ul>
-            <% end %>
+            <div id="sellingsChartContainer" style="max-width: 50%;border:1px solid black;"></div>
         </div>
       </div>
     </div>
@@ -146,95 +122,127 @@
   
 <script type="text/javascript">
     function basic_bars_depositors(labels, values) {
-        var sorted = values.sort(function(a,b){return a-b});
-        
-        var diff = 0;
-        var prev = -1;
-        
-        for(var i = 0; i < sorted.length; i++) {
-            if(sorted[i] != prev) {
-                diff += 1;
-                prev = sorted[i];
-            }
-        }
-        
-        var max = sorted[sorted.length-1];   
-        
-        var bar4 = new RGraph.Bar('depositorsChartContainer', values);
-            bar4.Set('chart.colors', ['#98CD00']); 
-            bar4.Set('chart.labels', labels);
-            bar4.Set('chart.text.size', 8);
-            bar4.Set('chart.text.angle', 45);
-            bar4.Set('chart.gutter.bottom', 50);
-            bar4.Set('chart.numyticks', diff);
-            bar4.Set('chart.ylabels.count', max);
-            bar4.Set('chart.gutter.left', 35);
-            bar4.Set('chart.variant', '3d');
-            bar4.Set('chart.strokestyle', 'transparent');
-            bar4.Set('chart.hmargin.grouped', 0);
-            bar4.Set('chart.scale.round', true);
-            bar4.Set('chart.zoom.factor', 3);
-            bar4.Draw();
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'depositorsChartContainer',
+                type: 'column'
+            },
+            title: {
+                text: '<%= t('depositorsPerDayChart') %>'
+            },
+            xAxis: {
+                categories: labels
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '<%= t('depositors') %>'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.x +' : '+ this.y +' <%= t('depositors') %>';
+                }
+            },
+            legend: {
+                enabled: false 
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 2
+                }
+            },
+                series: [{
+                data: values
+    
+            }]
+        });
     };
     
-    function basic_bars_depositors_hour(labels, values) {
-        var sorted = values.sort(function(a,b){return a-b});
-        
-        var diff = 0;
-        var prev = -1;
-        
-        for(var i = 0; i < sorted.length; i++) {
-            if(sorted[i] != prev) {
-                diff += 1;
-                prev = sorted[i];
-            }
-        }
-        
-        var max = sorted[sorted.length-1];
-        
-        
-        var bar4 = new RGraph.Bar('depositorsHourChartContainer', values);
-            bar4.Set('chart.colors', ['#98CD00']); 
-            bar4.Set('chart.labels', labels);
-            bar4.Set('chart.text.size', 8);
-            bar4.Set('chart.text.angle', 45);
-            bar4.Set('chart.gutter.bottom', 80);
-            bar4.Set('chart.numyticks', diff);
-            bar4.Set('chart.ylabels.count', max);
-            bar4.Set('chart.gutter.left', 35);
-            bar4.Set('chart.variant', '3d');
-            bar4.Set('chart.strokestyle', 'transparent');
-            bar4.Set('chart.hmargin.grouped', 0);
-            bar4.Set('chart.scale.round', true);
-            bar4.Draw();
+    function basic_bars_depositors_hour(labels, values, day) {
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'depositorsHourChartContainer' + day.replace(/\//g, '_'),
+                type: 'column'
+            },
+            title: {
+                text: '<%= t('depositorsPerHourChart') %> : ' + day
+            },
+            colors: [ 
+                '#3D96AE'
+            ],
+            xAxis: {
+                categories: labels
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '<%= t('depositors') %>'
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.x +' : '+ this.y +' <%= t('depositors') %>';
+                }
+            },
+            legend: {
+                enabled: false 
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 2
+                }
+            },
+                series: [{
+                data: values
+    
+            }]
+        });
     };
     
     function basic_bars_sellings(labels, values) {
-          var sorted = values.sort(function(a,b){return a-b});
-          
-            var diff = 0;
-            var prev = -1;
-            
-            for(var i = 0; i < sorted.length; i++) {
-                if(sorted[i] != prev) {
-                    diff += 1;
-                    prev = sorted[i];
+          var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'sellingsChartContainer',
+                type: 'column'
+            },
+            title: {
+                text: '<%= t('sellingsPerHourChart') %>'
+            },
+            xAxis: {
+                categories: labels
+            },
+            yAxis: {
+                min: 0,
+                allowDecimals:false,
+                title: {
+                    text: '<%= t('sellings') %>'
                 }
-            }
-            
-            var max = sorted[sorted.length-1];
-          
-          var bar4 = new RGraph.Bar('sellingsChartContainer', values);
-            bar4.Set('chart.colors', ['#2A17B1']); 
-            bar4.Set('chart.labels', labels);
-            bar4.Set('chart.numyticks', diff);
-            bar4.Set('chart.ylabels.count', max);
-            bar4.Set('chart.gutter.left', 35);
-            bar4.Set('chart.variant', '3d');
-            bar4.Set('chart.strokestyle', 'transparent');
-            bar4.Set('chart.hmargin.grouped', 0);
-            bar4.Set('chart.scale.round', true);
-            bar4.Draw();
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.x +' : '+ this.y +' <%= t('sellings') %>';
+                }
+            },
+            legend: {
+                enabled: false 
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 2
+                }
+            },
+                series: [{
+                data: values
+    
+            }]
+        });
     };
     
     depositorsDataLabels = []
@@ -248,10 +256,23 @@
     depositorsDataPerHourLabels = []
     depositorsDataPerHourValues = []
     
-    <% @depositorsDataPerDayPerHourFlatten.each do |depDH| %>
-        depositorsDataPerHourLabels.push('<%= depDH[0] %>');
-        depositorsDataPerHourValues.push(<%= depDH[1] %>);
-    <% end %>
+    <% @depositorsDataPerDayPerHour.each do |depday|
+            dd = depday[0]
+    %>        
+            depositorsDataPerHourLabels['<%= dd %>'] = [];
+            depositorsDataPerHourValues['<%= dd %>'] = [];
+    <%        
+            depday[1].each do |dephour|
+    %>            
+                depositorsDataPerHourLabels['<%= dd %>'].push('<%= dephour[0] %>h');
+                depositorsDataPerHourValues['<%= dd %>'].push(<%= dephour[1] %>);
+    <%            
+            end
+    %>       
+            basic_bars_depositors_hour(depositorsDataPerHourLabels['<%= dd %>'], depositorsDataPerHourValues['<%= dd %>'], '<%= dd %>');
+    <%
+        end
+    %>
     
     sellingsDataLabels = []
     sellingsDataValues = []
@@ -262,8 +283,6 @@
     <% end %>
     
     basic_bars_depositors(depositorsDataLabels, depositorsDataValues);
-    
-    basic_bars_depositors_hour(depositorsDataPerHourLabels, depositorsDataPerHourValues);
     
     basic_bars_sellings(sellingsDataLabels, sellingsDataValues);
 </script>

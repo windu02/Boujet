@@ -121,7 +121,7 @@ fr:
   depositors: "Déposants"
   depositorswithsells: "déposants avec au moins une vente"
   depositorsPerDayChart: "Illustration du nombre de déposants enregistrés par jour"
-  depositorsPerDayPerHourChart: "Illustration du nombre de déposants enregistrés par jour et par heure"
+  depositorsPerHourChart: "Illustration du nombre de déposants enregistrés par heure"
   sellingsPerHourChart: "Illustration du nombre de ventes par heure"
   averageitemprice: "Prix moyen d'un article"
   distributionaverageprice: "Répartition autour du prix moyen"

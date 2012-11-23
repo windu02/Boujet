@@ -243,18 +243,16 @@ class SellingsController < ApplicationController
             end
         end
         
-        @depositorsDataPerDayPerHourFlatten = Array.new
-        
-        depositorsDataPerDayPerHour = Array.new
+        @depositorsDataPerDayPerHour = Array.new
         
         @depositorsDataPerDay.each do |perday|
             dd = perday[0]
             
-            idDay = depositorsDataPerDayPerHour.index {|x| x[0] == dd }
+            idDay = @depositorsDataPerDayPerHour.index {|x| x[0] == dd }
             
             if idDay.nil?
-                depositorsDataPerDayPerHour.push([dd, Array.new])
-                idDay = depositorsDataPerDayPerHour.index {|x| x[0] == dd }
+                @depositorsDataPerDayPerHour.push([dd, Array.new])
+                idDay = @depositorsDataPerDayPerHour.index {|x| x[0] == dd }
             end
             
             
@@ -268,21 +266,13 @@ class SellingsController < ApplicationController
             depHourData = depForDay.map {|dep| dep.created_at.strftime("%H") }
             
             depHourData.each do |depHour|
-                id = depositorsDataPerDayPerHour[idDay][1].index {|x| x[0] == depHour}
+                id = @depositorsDataPerDayPerHour[idDay][1].index {|x| x[0] == depHour}
                 
                 if id.nil?
-                    depositorsDataPerDayPerHour[idDay][1].push([depHour, 1])
+                    @depositorsDataPerDayPerHour[idDay][1].push([depHour, 1])
                 else
-                    depositorsDataPerDayPerHour[idDay][1][id][1] += 1
+                    @depositorsDataPerDayPerHour[idDay][1][id][1] += 1
                 end
-            end
-        end
-        
-        depositorsDataPerDayPerHour.each do |depday|
-            dd = depday[0]
-            
-            depday[1].each do |dephour|
-                @depositorsDataPerDayPerHourFlatten.push([dd + " " + dephour[0] + "h",dephour[1]])
             end
         end
         

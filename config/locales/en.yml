@@ -119,7 +119,7 @@ en:
   depositors: "Depositors"
   depositorswithsells: "depositors with almost one sell"
   depositorsPerDayChart: "Chart about number of recorded depositors per day"
-  depositorsPerDayPerHourChart: "Chart about number of recorded depositors per day and per hour"
+  depositorsPerHourChart: "Chart about number of recorded depositors per hour"
   sellingsPerHourChart: "Chart about number of sellings per hour"
   averageitemprice: "Item average price"
   distributionaverageprice: "Distribution around the average price"
