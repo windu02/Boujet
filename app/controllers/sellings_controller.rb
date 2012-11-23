@@ -275,22 +275,55 @@ class SellingsController < ApplicationController
                 end
             end
         end
-        
+
         @sells = Sell.where(:current => false)
+
+        @sellsDayData = @sells.map {|sel| sel.created_at.strftime("%d/%m/%Y") }
         
-        @sellsHourData = @sells.map {|sel| sel.created_at.strftime("%H") }
+        @sellsDataPerDay = Array.new
         
-        @sellsData = Array.new
-        
-        @sellsHourData.each do |dd|
-            id = @sellsData.index {|x| x[0] == dd + "h" }
+        @sellsDayData.each do |dd|
+            id = @sellsDataPerDay.index {|x| x[0] == dd }
             if id.nil?
-                @sellsData.push([dd + "h", 1])
+                @sellsDataPerDay.push([dd, 1])
             else
-                @sellsData[id][1] += 1
+                @sellsDataPerDay[id][1] += 1
             end
         end
         
+        @sellsDataPerDayPerHour = Array.new
+        
+        @sellsDataPerDay.each do |perday|
+            dd = perday[0]
+            
+            idDay = @sellsDataPerDayPerHour.index {|x| x[0] == dd }
+            
+            if idDay.nil?
+                @sellsDataPerDayPerHour.push([dd, Array.new])
+                idDay = @sellsDataPerDayPerHour.index {|x| x[0] == dd }
+            end
+            
+            
+            sellsForDay = Array.new
+            @sells.each do |sel|
+                if sel.created_at.strftime("%d/%m/%Y") == dd
+                    sellsForDay.push(sel)
+                end
+            end
+            
+            sellsHourData = sellsForDay.map {|sel| sel.created_at.strftime("%H") }
+            
+            sellsHourData.each do |selHour|
+                id = @sellsDataPerDayPerHour[idDay][1].index {|x| x[0] == selHour}
+                
+                if id.nil?
+                    @sellsDataPerDayPerHour[idDay][1].push([selHour, 1])
+                else
+                    @sellsDataPerDayPerHour[idDay][1][id][1] += 1
+                end
+            end
+        end
+
         @items = Item.all
         
         @soldItems = @items.select {|it| it.is_sold? }

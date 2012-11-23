@@ -93,7 +93,11 @@
             </div>
         </div>
         <div class="span12">
-            <div id="sellingsChartContainer" style="max-width: 50%;border:1px solid black;"></div>
+            <% @sellsDataPerDayPerHour.each do |depday|
+                dd = depday[0]
+            %>
+                <div id="sellingsChartContainer<%= dd.gsub('/', '_') %>" style="max-width: 50%;border:1px solid black;margin: 1px 1px;" class="pull-left"></div>
+            <% end %>
         </div>
       </div>
     </div>
@@ -178,6 +182,7 @@
             },
             yAxis: {
                 min: 0,
+                allowDecimals:false,
                 title: {
                     text: '<%= t('depositors') %>'
                 }
@@ -204,15 +209,18 @@
         });
     };
     
-    function basic_bars_sellings(labels, values) {
+    function basic_bars_sellings_hour(labels, values, day) {
           var chart = new Highcharts.Chart({
             chart: {
-                renderTo: 'sellingsChartContainer',
+                renderTo: 'sellingsChartContainer' + day.replace(/\//g, '_'),
                 type: 'column'
             },
             title: {
-                text: '<%= t('sellingsPerHourChart') %>'
+                text: '<%= t('sellingsPerHourChart') %> : ' + day
             },
+            colors: [ 
+                '#3D96AE'
+            ],
             xAxis: {
                 categories: labels
             },
@@ -273,18 +281,30 @@
     <%
         end
     %>
+
     
-    sellingsDataLabels = []
-    sellingsDataValues = []
+    sellsDataPerHourLabels = []
+    sellsDataPerHourValues = []
     
-    <% @sellsData.each do |selD| %>
-        sellingsDataLabels.push('<%= selD[0] %>');
-        sellingsDataValues.push(<%= selD[1] %>);
-    <% end %>
+    <% @sellsDataPerDayPerHour.each do |selday|
+            dd = selday[0]
+    %>        
+            sellsDataPerHourLabels['<%= dd %>'] = [];
+            sellsDataPerHourValues['<%= dd %>'] = [];
+    <%        
+            selday[1].each do |selhour|
+    %>            
+                sellsDataPerHourLabels['<%= dd %>'].push('<%= selhour[0] %>h');
+                sellsDataPerHourValues['<%= dd %>'].push(<%= selhour[1] %>);
+    <%            
+            end
+    %>       
+            basic_bars_sellings_hour(sellsDataPerHourLabels['<%= dd %>'], sellsDataPerHourValues['<%= dd %>'], '<%= dd %>');
+    <%
+        end
+    %>
     
     basic_bars_depositors(depositorsDataLabels, depositorsDataValues);
-    
-    basic_bars_sellings(sellingsDataLabels, sellingsDataValues);
 </script>
   
   
