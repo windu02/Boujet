@@ -271,8 +271,9 @@
             depositorsDataPerHourValues['<%= dd %>'] = [];
     <%        
             depday[1].each do |dephour|
+                depH = ((dephour[0].to_i+1)<10 ? "0"+(dephour[0].to_i+1).to_s : (dephour[0].to_i+1).to_s)
     %>            
-                depositorsDataPerHourLabels['<%= dd %>'].push('<%= dephour[0] %>h');
+                depositorsDataPerHourLabels['<%= dd %>'].push('<%= dephour[0] %>h-<%= depH %>h');
                 depositorsDataPerHourValues['<%= dd %>'].push(<%= dephour[1] %>);
     <%            
             end
@@ -293,8 +294,9 @@
             sellsDataPerHourValues['<%= dd %>'] = [];
     <%        
             selday[1].each do |selhour|
+                selH = ((selhour[0].to_i+1)<10 ? "0"+(selhour[0].to_i+1).to_s : (selhour[0].to_i+1).to_s)
     %>            
-                sellsDataPerHourLabels['<%= dd %>'].push('<%= selhour[0] %>h');
+                sellsDataPerHourLabels['<%= dd %>'].push('<%= selhour[0] %>h-<%= selH %>h');
                 sellsDataPerHourValues['<%= dd %>'].push(<%= selhour[1] %>);
     <%            
             end

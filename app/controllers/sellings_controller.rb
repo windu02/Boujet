@@ -230,7 +230,7 @@ class SellingsController < ApplicationController
             @depositorsWithSellsPercent = @depositorsWithSells.count() * 100 / @depositors.count()
         end
         
-        @depositorsDayData = @depositors.map {|dep| dep.created_at.strftime("%d/%m/%Y") }
+        @depositorsDayData = @depositors.map {|dep| dep.created_at.in_time_zone('Paris').strftime("%d/%m/%Y") }
         
         @depositorsDataPerDay = Array.new
         
@@ -258,12 +258,12 @@ class SellingsController < ApplicationController
             
             depForDay = Array.new
             @depositors.each do |dep|
-                if dep.created_at.strftime("%d/%m/%Y") == dd
+                if dep.created_at.in_time_zone('Paris').strftime("%d/%m/%Y") == dd
                     depForDay.push(dep)
                 end
             end
             
-            depHourData = depForDay.map {|dep| dep.created_at.strftime("%H") }
+            depHourData = depForDay.map {|dep| dep.created_at.in_time_zone('Paris').strftime("%H") }
             
             depHourData.each do |depHour|
                 id = @depositorsDataPerDayPerHour[idDay][1].index {|x| x[0] == depHour}
@@ -276,9 +276,9 @@ class SellingsController < ApplicationController
             end
         end
 
-        @sells = Sell.where(:current => false)
+        @sells = Sell.where(:current => false).order(:created_at)
 
-        @sellsDayData = @sells.map {|sel| sel.created_at.strftime("%d/%m/%Y") }
+        @sellsDayData = @sells.map {|sel| sel.created_at.in_time_zone('Paris').strftime("%d/%m/%Y") }
         
         @sellsDataPerDay = Array.new
         
@@ -306,12 +306,12 @@ class SellingsController < ApplicationController
             
             sellsForDay = Array.new
             @sells.each do |sel|
-                if sel.created_at.strftime("%d/%m/%Y") == dd
+                if sel.created_at.in_time_zone('Paris').strftime("%d/%m/%Y") == dd
                     sellsForDay.push(sel)
                 end
             end
             
-            sellsHourData = sellsForDay.map {|sel| sel.created_at.strftime("%H") }
+            sellsHourData = sellsForDay.map {|sel| sel.created_at.in_time_zone('Paris').strftime("%H") }
             
             sellsHourData.each do |selHour|
                 id = @sellsDataPerDayPerHour[idDay][1].index {|x| x[0] == selHour}
