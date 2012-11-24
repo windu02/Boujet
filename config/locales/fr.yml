@@ -162,3 +162,8 @@ fr:
   minimumsixchar: "minimum 6 caractères"
   inaverage: "en moyenne"
   perdepositor: "par déposant"
+  sellingslist: "Liste des ventes"
+  currentsellnotowner: "La vente que vous essayez d'afficher est en cours et ne vous appartient pas."
+  receipt: "Facture"
+  recipient: "Client"
+  aboutthesell: "de la vente"

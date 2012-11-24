@@ -1,0 +1,84 @@
+<div class="row-fluid">
+        <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                        <th><%= t('sellid') %></th>
+                        <th><%= t('payment') %></th>
+                        <th><%= t('total') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if ! @sells.empty? %>
+                        <% totalCash = 0 %>
+                        <% totalCheque = 0 %>
+                        <% totalSell = 0 %>
+                        <% @sells.each do |s| %>
+                            <% if s.payment == "cheque" %>
+                                <% totalCheque += s.total %>
+                            <% elsif s.payment == "cash" %>
+                                <% totalCash += s.total %>
+                            <% end %>
+                            <% totalSell += s.total %>
+                            <tr>
+                                <td><%= link_to(s.id, :controller => "sellings", :action => "show", :sellid => s.id) %></td>
+                                <td>
+                                    <% if s.payment == "cheque" %>
+                                        <span class="label label-warning"><%= t('bycheque') %></span>
+                                    <% elsif s.payment == "cash" %>
+                                        <span class="label label-info"><%= t('bycash') %></span>
+                                    <% end %>
+                                </td>
+                                <td><%= s.total %> €</td>
+                            </tr>
+                        <% end %>
+                        <% totalSellPettyCash = totalSell + Settings.pettycash.to_f %>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="warning">
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total <%= t('bycheque') %></u>: </strong></td>
+                            <td><%= totalCheque %> €</td>
+                        </tr>
+                        <tr class="info">
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total <%= t('bycash') %></u>: </strong></td>
+                            <td><%= totalCash %> €</td>
+                        </tr>
+                        <tr class="success">
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total</u>: </strong></td>
+                            <td><span class="badge badge-success"><%= totalSell %> €</span></td>
+                        </tr>
+                        <tr class="error">
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total + <%= t('pettycash') %></u>: </strong></td>
+                            <td><span class="badge badge-important"><%= totalSellPettyCash %> €</span></td>
+                        </tr>
+                        <% profit = totalSell * Settings.keptfees.to_f / 100 %>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr class="success">
+                            <td>&nbsp;</td>
+                            <td><strong><u><%= t('profit') %></u>: </strong></td>
+                            <td><span class="badge badge-success"><%= profit %> €</span></td>
+                        </tr>
+                        <tr class="error">
+                            <td>&nbsp;</td>
+                            <td><strong><u><%= t('profit') %> + <%= t('pettycash') %></u>: </strong></td>
+                            <td><span class="badge badge-important"><%= profit + Settings.pettycash.to_f %> €</span></td>
+                        </tr>
+                <% end %>
+                </tbody>
+        </table>
+        <% if @sells.empty? %>
+        <div class="alert alert-info">
+                <%= t('noselldone') %>
+        </div>
+        <% end %>
+    </div>

@@ -54,7 +54,13 @@
               <li <% if @home -%>class="active"<% end -%>><a href="<%=root_url()%>"><%= t('home') %></a></li>
               <% if user_signed_in? and current_user.is_a? Administrator-%>
               <li <% if @recordings -%>class="active"<% end -%>><a href="<%= url_for(:controller=>"recordings", :action=>"index") %>"><%= t('recordings') %></a></li>
-              <li <% if @sellMenu -%>class="active"<% end -%>><%= link_to(t('managesellings'), :controller => "sellings", :action => "index") %></li>
+              <li class="dropdown <% if @sellMenu -%>active<% end -%>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('sellings') %> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to(t('managesellings'), :controller => "sellings", :action => "index") %></li>
+                  <li><%= link_to(t('sellingslist'), :controller => "sellings", :action => "listall") %></li>
+                </ul>
+              </li>
               <li class="dropdown <% if @depositorsMenu -%>active<% end -%>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= t('depositors') %> <b class="caret"></b></a>
                 <ul class="dropdown-menu">

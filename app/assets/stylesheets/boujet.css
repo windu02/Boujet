@@ -1,4 +1,4 @@
-.sellCardModal {
+.sellCardModal, .receiptModal {
     width: 80%;
     left: 35%;
 }

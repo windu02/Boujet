@@ -1,5 +1,5 @@
 class SellingsController < ApplicationController
-    before_filter :check_is_admin, :only => [:index, :create, :show, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell, :summary, :balancesheet, :statistics]
+    before_filter :check_is_admin, :only => [:index, :create, :show, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell, :summary, :balancesheet, :statistics, :listall, :receipt]
     before_filter :getAdministratorFromCurrentUser, :only => [:create, :show, :showcurrent]
     before_filter :getCurrentSell, :only => [:index, :create, :showcurrent, :addItemToCurrentSell, :searchItemToSell, :removeFromCurrentSell, :editItemPrice, :currentsellpayment, :closecurrentsell, :cancelcurrentsell]
     
@@ -20,6 +20,7 @@ class SellingsController < ApplicationController
             @currentSell = nil
         else
             @currentSell = @results.first
+            @currentSell.items.sort! {|x,y| x.updated_at <=> y.updated_at }
         end
     end
     
@@ -147,6 +148,21 @@ class SellingsController < ApplicationController
     def show
         @sellMenu = true
         @sell = Sell.find(params[:sellid])
+        
+        if @sell.current
+            if @sell.user == current_user
+                redirect_to :controller => "sellings", :action => "showcurrent"
+            else
+                flash[:error] = t('currentsellnotowner')
+                redirect_to :controller => "sellings", :action => "listall"
+            end
+        end
+    end
+    
+    def receipt
+        @sell = Sell.find(params[:sellid])
+        
+        render :partial => "sellings/receipt"
     end
     
     def showcurrent
@@ -206,9 +222,14 @@ class SellingsController < ApplicationController
                     render :template => "sellings/currentsellpayment"
             else    
                     flash[:notice] = t('edit_success')
-                    redirect_to :controller => "sellings", :action => "index"
+                    redirect_to :controller => "sellings", :action => "show", :sellid => @currentSell.id
             end
         end
+    end
+    
+    def listall
+        @sellMenu = true
+        @sells = Sell.where(:current => false)
     end
     
     def balancesheet
@@ -216,7 +237,7 @@ class SellingsController < ApplicationController
         
         @sells = Sell.where(:current => false)
         
-        @depositors = Depositor.all
+        @depositors = Depositor.order(:lastname)
     end
     
     def statistics

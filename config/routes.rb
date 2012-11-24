@@ -57,6 +57,8 @@ Boujet02::Application.routes.draw do
       
       get '/sellings/:sellid/show' => 'sellings#show'
       
+      get '/sellings/:sellid/receipt' => 'sellings#receipt'
+      
       get '/sellings/create' => 'sellings#create'
       
       get '/sellings/showcurrent' => 'sellings#showcurrent'
@@ -64,6 +66,8 @@ Boujet02::Application.routes.draw do
       get '/sellings/cancelcurrentsell' => 'sellings#cancelcurrentsell'
       
       get '/sellings/currentsellpayment' => 'sellings#currentsellpayment'
+      
+      get '/sellings/listall' => 'sellings#listall'
       
       post '/sellings/closecurrentsell' => 'sellings#closecurrentsell'
       

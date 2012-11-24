@@ -1,3 +1,6 @@
+<%
+    if @sell.current and @sell.user == current_user
+%>
 <script language="javascript">
         function displayItemDeleteConfirmation(itemid)
         {
@@ -51,6 +54,10 @@
         </div>
 </div>
 
+<%
+    end
+%>
+
 <h2><%= t('itemslistfromsell') %></h2>
 <div class="row-fluid">
         <table class="table table-striped">
@@ -69,15 +76,27 @@
                             <tr>
                                 <td><%= it.id %></td>
                                 <td><%= it.name %></td>
-                                <td><%= it.price %> €&nbsp;&nbsp;<a class="btn btn-info btn-mini" onclick="javascript:displayItemEditPriceForm('<%= it.id %>');"><i class="icon-pencil icon-white"></i> <%= t('edit') %></a> (<%= t('negotiation') %> : +/- <%= it.user.negotiation %> €)</td>
+                                <td><%= it.price %> €<% if @sell.current and @sell.user == current_user %>&nbsp;&nbsp;<a class="btn btn-info btn-mini" onclick="javascript:displayItemEditPriceForm('<%= it.id %>');"><i class="icon-pencil icon-white"></i> <%= t('edit') %></a> (<%= t('negotiation') %> : +/- <%= it.user.negotiation %> €)<% end %></td>
+                                <%
+                                    if @sell.current and @sell.user == current_user
+                                %>
                                 <td><a class="btn btn-danger btn-mini" onclick="javascript:displayItemDeleteConfirmation('<%= it.id %>');"><i class="icon-remove icon-white"></i> <%= t('delete') %></a></td>
+                                <%
+                                    end
+                                %>
                             </tr>
                         <% end %>
-                        <tr>
+                        <tr class="success">
                             <td>&nbsp;</td>
                             <td><strong><u>Total</u>: </strong></td>
-                            <td><%= totalSell %> €</td>
+                            <td><span class="badge badge-success"><%= totalSell %> €</span></td>
+                            <%
+                                if @sell.current and @sell.user == current_user
+                            %>
                             <td>&nbsp;</td>
+                            <%
+                                end
+                            %>
                         </tr>
                 <% end %>
                 </tbody>
@@ -89,6 +108,10 @@
         <% end %>
 </div>
 
+<%
+    if @sell.current and @sell.user == current_user
+%>
+
 <%= render "sellings/additemform" %>
 
 <div class="row-fluid">
@@ -99,3 +122,56 @@
         </center>
     </div>
 </div>
+
+<%
+    else
+%>
+
+<script language="JavaScript"> 
+    function imprime_zone(url, obj) {
+//        var zi = document.getElementById(obj).innerHTML;
+        // Ouvre une nouvelle fenetre
+        var f = window.open(url, "ZoneImpr", "height=100, width=400,toolbar=0, menubar=0, scrollbars=1, resizable=1,status=0, location=0, left=30, top=10");
+        // Définit le Style de la page
+        //f.document.body.style.color = '#000000';
+        //f.document.body.style.backgroundColor = '#FFFFFF';
+        f.document.body.style.padding = "10px";
+        // Ajoute les Données
+        f.document.title = "<%= t('receipt') %>";
+//        f.document.body.innerHTML += " " + zi + " ";
+        // Imprime et ferme la fenetre
+        setTimeout(function() {
+            f.window.print();
+            f.window.close();
+            },1000);        
+        
+        
+        return true;
+    }
+</script>
+
+<!-- Modal -->
+<div id="receiptModal" class="modal hide fade receiptModal" tabindex="-1" role="dialog" aria-labelledby="receiptModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3 id="myModalLabel"><%= t('receipt') %></h3>
+  </div>
+  <div class="modal-body" id="receiptmodalbody">
+    <%= image_tag("loadingcircle.gif") %>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true"><%= t('close') %></button>
+    <button class="btn btn-primary" onclick="javascript:imprime_zone('<%= url_for(:controller => "sellings", :action => "receipt", :sellid => @sell.id) %>', 'receiptmodalbody');"><%= t('print') %></button>
+  </div>
+</div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <center>
+                <a data-target="#receiptModal" data-remote="<%= url_for(:controller => "sellings", :action => "receipt", :sellid => @sell.id) %>" role="button" class="btn btn-success" data-toggle="modal"><%= t('receipt') %></a>
+            </center>
+        </div>
+    </div>
+<%
+    end
+%>

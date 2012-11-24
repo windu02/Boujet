@@ -160,3 +160,8 @@ en:
   minimumsixchar: "minimum 6 characters"
   inaverage: "in average"
   perdepositor: "per depositor"
+  sellingslist: "Sellings list"
+  currentsellnotowner: "The selling you want to show is ongoing and you're not the owner."
+  receipt: "Receipt"
+  recipient: "Recipient"
+  aboutthesell: "about the selling"

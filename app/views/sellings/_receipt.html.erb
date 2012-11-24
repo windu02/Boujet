@@ -1,0 +1,62 @@
+<%= stylesheet_link_tag    'bootstrap.css' %>
+<%= stylesheet_link_tag    'boujet.css' %>
+
+<div class="hero-unit">
+  <center><h1><%= t('receipt') %> <%= t('aboutthesell') %> n° <%= @sell.id %></h1></center>
+        <div class="row-fluid">
+            <div class="span6 pull-left">
+                <p>Ludothèque Lei Jougadou</p>
+                <p>Impasse Capesse</p>
+                <p>83 300 Draguignan</p>
+                <p><span class="label label-info"><i class="icon-signal icon-white"></i> <%= t('phone') %></span> : 04 94 68 98 18</p>
+                <p><span class="label label-info"><i class="icon-envelope icon-white"></i> <%= t('mail') %></span> : accueil@leijougadou.org</p>
+            </div>
+            <div class="span6 pull-right">
+                        <span class="label label-info"><i class="icon-map-marker icon-white"></i> <%= t('recipient') %></span> :<br/><br/>
+                        <span class="label label-info"><i class="icon-map-marker icon-white"></i> <%= t('address') %></span> :
+                </div>
+            </div>
+        </div>
+</div>
+
+<h2><%= t('itemslistfromsell') %></h2>
+<div class="row-fluid">
+        <table class="table table-striped">
+                <thead>
+                <tr>
+                        <th><%= t('itemid') %></th>
+                        <th><%= t('name') %></th>
+                        <th><%= t('price') %></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% if ! @sell.items.empty? %>
+                        <% totalSell = 0 %>
+                        <% @sell.items.each do |it| %>
+                            <% totalSell += it.price %>
+                            <tr>
+                                <td><%= it.id %></td>
+                                <td><%= it.name %></td>
+                                <td><%= it.price %> €</td>
+                            </tr>
+                        <% end %>
+                        <tr class="success">
+                            <td>&nbsp;</td>
+                            <td><strong><u>Total</u>: </strong></td>
+                            <td><span class="badge badge-success"><%= totalSell %> €</span></td>
+                        </tr>
+                <% end %>
+                </tbody>
+        </table>
+        <% if @sell.items.empty? %>
+        <div class="alert alert-info">
+                <%= t('noiteminsell') %>
+        </div>
+        <% end %>
+</div>
+    
+    <hr>
+
+      <footer>
+        <p class="text-info">&copy; Ludothèque Lei Jougadou (<u>http://www.leijougadou.org</u>) / Bourse aux jouets <% todayDate = Date.today; %><%= todayDate.year %> (<u>http://boujet.leijougadou.org</u>)</p>
+      </footer>
