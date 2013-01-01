@@ -5,5 +5,5 @@ ActionMailer::Base.smtp_settings = {
 :user_name            => ENV['BOUJET_MAILER_USERNAME'],
 :password             => ENV['BOUJET_MAILER_PASSWORD'],
 :authentication       => ENV['BOUJET_MAILER_AUTHENTICATION'],
-:enable_starttls_auto => ENV['BOUJET_MAILER_TLSAUTO']
+:enable_starttls_auto => true
 }
