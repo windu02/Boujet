@@ -1,9 +1,9 @@
 ActionMailer::Base.smtp_settings = {
-:address              => "ns0.ovh.net",
-:port                 => 587,
-:domain               => "leijougadou.org",
-:user_name            => "boujet@leijougadou.org",
-:password             => "boujet8gadou",
-:authentication       => "plain",
-:enable_starttls_auto => true
+:address              => ENV['BOUJET_MAILER_ADDRESS'],
+:port                 => ENV['BOUJET_MAILER_PORT'],
+:domain               => ENV['BOUJET_MAILER_DOMAIN'],
+:user_name            => ENV['BOUJET_MAILER_USERNAME'],
+:password             => ENV['BOUJET_MAILER_PASSWORD'],
+:authentication       => ENV['BOUJET_MAILER_AUTHENTICATION'],
+:enable_starttls_auto => ENV['BOUJET_MAILER_TLSAUTO']
 }
