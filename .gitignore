@@ -18,4 +18,4 @@
 /config/application.yml
 
 # Ignore deploy notes
-/deployToHeroku.txt
+/deployToHeroku.sh
