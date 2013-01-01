@@ -45,7 +45,7 @@ gem 'activeadmin'
 gem 'meta_search',    '>= 1.1.0.pre'
 
 group :production do
-  gem 'pg'
+  gem 'sqlite3'
 end
 
 group :development do
@@ -61,3 +61,5 @@ gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
 
 gem 'figaro', '>= 0.5.0'
+
+gem "builder", "3.0.0"
