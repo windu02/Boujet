@@ -46,6 +46,6 @@ module Boujet02
     config.assets.version = '1.0'
 
     # Files to include for assets precompiling
-    config.assets.precompile += ['highcharts.js', 'bootstrap.min.js', 'bootstrap.css', 'bootstrap-responsive.css', 'boujet.css']
+    config.assets.precompile += ['highcharts.js', 'bootstrap.js', 'bootstrap.css', 'bootstrap-responsive.css', 'boujet.css']
   end
 end
