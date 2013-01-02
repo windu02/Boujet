@@ -382,6 +382,10 @@ class SellingsController < ApplicationController
             @profit = @turnover*Settings.keptfees.to_f / 100
         end
         
-        @averageItemPerDepositors = @items.count() / @depositors.count()
+        if @depositors.count() > 0
+            @averageItemPerDepositors = @items.count() / @depositors.count()
+        else
+            @averageItemPerDepositors = 0
+        end
     end
 end
