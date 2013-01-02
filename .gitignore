@@ -19,3 +19,12 @@
 
 # Ignore deploy notes
 /deployToHeroku.sh
+
+# Ignore deploy demo
+/pullAndDeploy.sh
+
+# Ignore public assets folder
+/public/assets
+
+# Ignore vendor/bundle
+/vendor/bundle

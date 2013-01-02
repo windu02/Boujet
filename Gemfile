@@ -50,7 +50,6 @@ end
 
 group :development do
 	gem 'sqlite3'
-	gem 'annotate', ">=2.5.0.pre1"
 end
 
 gem 'http_accept_language'
@@ -61,3 +60,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'will_paginate-bootstrap'
 
 gem 'figaro', '>= 0.5.0'
+
+gem 'rake'
+
+gem 'annotate', ">=2.5.0.pre1"

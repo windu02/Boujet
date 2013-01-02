@@ -7,15 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 puts 'SUPER ADMIN'
-superadmin = AdminUser.new({    :email => ENV['SUPERADMIN_EMAIL'].dup,
+superadmin = AdminUser.create!({    :email => ENV['SUPERADMIN_EMAIL'].dup,
                                 :password => ENV['SUPERADMIN_PASSWORD'].dup,
                                 :password_confirmation => ENV['SUPERADMIN_PASSWORD'].dup
                          })
-superadmin.save
 puts 'super admin: ' << superadmin.email
 
-puts 'CONFIG VARS'
-pettycash = Config.create({ :key => "pettycash", :value => "0" })
-puts 'config vars: ' << pettycash.key + ' with value: ' + pettycash.value
-keptfees = Config.create({ :key => "keptfees", :value => "20" })
-puts 'config vars: ' << keptfees.key + ' with value: ' + keptfees.value

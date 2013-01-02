@@ -44,5 +44,8 @@ module Boujet02
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Files to include for assets precompiling
+    config.assets.precompile += ['highcharts.js', 'bootstrap.min.js', 'bootstrap.css', 'bootstrap-responsive.css', 'boujet.css']
   end
 end
