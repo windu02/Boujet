@@ -45,7 +45,7 @@ gem 'activeadmin'
 gem 'meta_search',    '>= 1.1.0.pre'
 
 group :production do
-  gem 'sqlite3'
+  gem 'pg'
 end
 
 group :development do
