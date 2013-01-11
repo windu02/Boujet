@@ -45,12 +45,12 @@ gem 'activeadmin'
 #gem 'cancan'
 gem 'meta_search',    '>= 1.1.0.pre'
 
-group :production do
-  gem 'sqlite3'
-end
-
 group :development do
 	gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
 end
 
 gem 'http_accept_language'
