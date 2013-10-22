@@ -27,4 +27,18 @@ class SettingsController < ApplicationController
     render "settings/index"
     
   end
+  
+  def newYear
+    @settingsMenu = true
+    
+    currentYear = Settings.currentyear.to_i
+    currentYear = currentYear + 1
+    
+    Settings.currentyear = currentYear
+    
+    
+    flash.now[:notice] = t('save_success')
+    
+    render "settings/index"
+  end
 end

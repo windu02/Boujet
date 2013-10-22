@@ -7,6 +7,7 @@
 <div class="row-fluid">
         <div class="span10 offset2">
                 <p><span class="label label-info"><%= t('name') %></span> : <%= @item.name %></p>
+                <p><span class="label label-info"><%= t('owner') %></span> : <a href="<%= url_for(:controller => "depositors", :action => "show", :depositorid => @item.user.id) %>"><%= @item.user.firstname.capitalize %> <%= @item.user.lastname.capitalize %></a></p>
                 <p><span class="label label-info"><%= t('type') %></span> : <%= @item.type %></p>
                 <p><span class="label label-info"><%= t('brand') %></span> : <%= @item.brand %></p>
                 <p><span class="label label-info"><%= t('color') %></span> : <%= @item.color %></p>

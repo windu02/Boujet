@@ -85,6 +85,7 @@ Boujet02::Application.routes.draw do
       get '/sellings' => 'sellings#index'
       
       post '/settings/updateSettings' => 'settings#updateSettings'
+      post '/settings/newYear' => 'settings#newYear'
       
       get '/settings' => 'settings#index'
       

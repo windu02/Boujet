@@ -32,8 +32,14 @@ class Depositor < User
   validates :email, :presence => true
   
   def hasAlmostOneSell?
-    soldItems = self.items.select {|it| it.is_sold? }
+    soldItems = self.items.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i)).select {|it| it.is_sold? }
     
     return soldItems.count() > 0
+  end
+  
+  def contributeThisYear?
+    updatedItems = self.items.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
+    
+    return (self.created_at > DateTime.new(Settings.currentyear.to_i) or self.updated_at > DateTime.new(Settings.currentyear.to_i) or updatedItems.count() > 0)
   end
 end

@@ -165,3 +165,6 @@ en:
   receipt: "Receipt"
   recipient: "Recipient"
   aboutthesell: "about the selling"
+  newyear: "Reinit for a new year"
+  currentyear: "Current year"
+  notrevertaction: "Be careful! This action is not a revert action!"

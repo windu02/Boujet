@@ -128,6 +128,8 @@ class ItemsController < ApplicationController
     
     search_condition = conditions.join(' OR ')
     
+    search_condition = '(' + search_condition + ')' + ' AND (created_at >= \'' + DateTime.new(Settings.currentyear.to_i).strftime("%F %T") + '\')'
+    
     @results = Item.find(:all, :conditions => search_condition)
     
     if @results.length == 1
@@ -139,7 +141,7 @@ class ItemsController < ApplicationController
   
   def listall
     @itemsMenu = true
-    
-    @items = Item.paginate(:page => params[:page], :per_page => 20).order(:name)
+
+    @items = Item.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i)).paginate(:page => params[:page], :per_page => 20).order(:name)
   end
 end

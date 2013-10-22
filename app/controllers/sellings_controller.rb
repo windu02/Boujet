@@ -87,6 +87,8 @@ class SellingsController < ApplicationController
         
         search_condition = conditions.join(' OR ')
         
+        search_condition = '(' + search_condition + ')' + ' AND (created_at >= \'' + DateTime.new(Settings.currentyear.to_i).strftime("%F %T") + '\')'
+        
         @results = Item.find(:all, :conditions => search_condition)
         
         if @results.empty?
@@ -229,21 +231,23 @@ class SellingsController < ApplicationController
     
     def listall
         @sellMenu = true
-        @sells = Sell.where(:current => false)
+        @sells = Sell.where(:current => false).where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
     end
     
     def balancesheet
         @settingsMenu = true
         
-        @sells = Sell.where(:current => false)
+        @sells = Sell.where(:current => false).where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
         
         @depositors = Depositor.order(:lastname)
+        @depositors = @depositors.select {|dep| dep.contributeThisYear? }
     end
     
     def statistics
         @settingsMenu = true
         
         @depositors = Depositor.order(:created_at)
+        @depositors = @depositors.select {|dep| dep.contributeThisYear? }
         
         @depositorsWithSells = @depositors.select {|dep| dep.hasAlmostOneSell? }
         @depositorsWithSellsPercent = 0
@@ -297,7 +301,7 @@ class SellingsController < ApplicationController
             end
         end
 
-        @sells = Sell.where(:current => false).order(:created_at)
+        @sells = Sell.where(:current => false).where('created_at >= ?', DateTime.new(Settings.currentyear.to_i)).order(:created_at)
 
         @sellsDayData = @sells.map {|sel| sel.created_at.in_time_zone('Paris').strftime("%d/%m/%Y") }
         
@@ -345,7 +349,7 @@ class SellingsController < ApplicationController
             end
         end
 
-        @items = Item.all
+        @items = Item.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
         
         @soldItems = @items.select {|it| it.is_sold? }
         @soldItemsPercent = 0

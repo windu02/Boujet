@@ -167,3 +167,6 @@ fr:
   receipt: "Facture"
   recipient: "Client"
   aboutthesell: "de la vente"
+  newyear: "Réinitialiser pour une nouvelle année"
+  currentyear: "Année courante"
+  notrevertaction: "Attention! Cette action est irreversible!"

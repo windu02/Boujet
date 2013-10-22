@@ -9,6 +9,7 @@ ActiveAdmin.register Item do
     column :other
     column :user
     column :sell
+    column :created_at
     default_actions
   end
   

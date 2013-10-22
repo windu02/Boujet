@@ -22,6 +22,8 @@ class DepositorsController < ApplicationController
     else
         @depositorsMenu = true
     end
+    
+    @depositor.items = @depositor.items.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
   end
   
   def edit
@@ -88,6 +90,7 @@ class DepositorsController < ApplicationController
   def items
     @depositorsMenu = true
     @depositor = Depositor.find(params[:depositorid])
+    @depositor.items = @depositor.items.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
     @depositor.items.reverse!
   end
   
@@ -143,12 +146,14 @@ class DepositorsController < ApplicationController
   
   def beforesellcard
     @depositor = Depositor.find(params[:depositorid])
+    @depositor.items = @depositor.items.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
     
     render :partial => "depositors/beforesellcard"
   end
   
   def aftersellcard
     @depositor = Depositor.find(params[:depositorid])
+    @depositor.items = @depositor.items.where('created_at >= ?', DateTime.new(Settings.currentyear.to_i))
     
     render :partial => "depositors/aftersellcard"
   end

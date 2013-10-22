@@ -35,6 +35,25 @@
                                 </div>
                            </div>
                  <% end %>
+                 <hr/>
+                 <%= form_tag(url_for(:controller => "settings", :action => "newYear"), :method => :post, :class => "form-horizontal") do %>
+                
+                        <div class="control-group">
+                			<%= label_tag :currentyear, t('currentyear'), :class => "control-label" %>
+                			<div class="controls">
+                				<%= text_field_tag :currentyear, params[:currentyear], :value => Settings.currentyear, :class => "input-large", :disabled => true %>
+                			</div>
+                		</div>
+                		<div class="alert alert-error">
+							<%= t('notrevertaction') %>
+						</div>
+                          
+                           <div class="control-group">
+                                <div class="controls">
+                                     <%= submit_tag t('newyear'), :name => nil, :class => "btn btn-danger" %>
+                                </div>
+                           </div>
+                 <% end %>
             </div>
         </div>
 </div>
