@@ -21,7 +21,11 @@ class SettingsController < ApplicationController
     if params[:keptfees] != Settings.keptfees
         Settings.keptfees = params[:keptfees]
     end
-    
+ 
+    if params[:unsoldreturn] != Settings.unsoldreturn
+        Settings.unsoldreturn = params[:unsoldreturn]
+    end
+   
     flash.now[:notice] = t('save_success')
     
     render "settings/index"

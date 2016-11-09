@@ -115,6 +115,7 @@ en:
   total: "Total"
   noselldone: "No sell done."
   keptfees: "Kept fees"
+  unsoldreturn: "Unsold Return instructions"
   statistics: "Statistics"
   depositors: "Depositors"
   depositorswithsells: "depositors with almost one sell"

@@ -34,3 +34,7 @@
 
 # Ignore Backups
 /dbBackups
+
+# Ignore .idea folder
+.idea
+

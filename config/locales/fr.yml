@@ -117,6 +117,7 @@ fr:
   total: "Total"
   noselldone: "Aucune vente effectuée."
   keptfees: "Frais retenus"
+  unsoldreturn: "Instructions pour la restitution des invendus"
   statistics: "Statistiques"
   depositors: "Déposants"
   depositorswithsells: "déposants avec au moins une vente"
